@@ -85,7 +85,7 @@ public class IOReader {
         return false;
     }
     
-    public static ArrayList<Account> readFileCustomer(String path) {
+    public static ArrayList<Customer> readFileCustomer(String path) {
         ArrayList<Customer> stdList = new ArrayList<>();
 
         try (FileInputStream fis = new FileInputStream(path);
