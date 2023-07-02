@@ -357,7 +357,7 @@ public class Validate {
         boolean valid = false;
         
         do {
-            id = random.nextInt(); // Tạo số ngẫu nhiên
+            id = random.nextInt(Integer.MAX_VALUE); // Tạo số ngẫu nhiên
 
             // Kiểm tra xem id có tồn tại trong danh sách đã có hay không
             for (int k = 0; k < ManagementLibrary.account.size(); k++) {
