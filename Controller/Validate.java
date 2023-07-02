@@ -245,29 +245,49 @@ public class Validate {
         return string;
     }
     public static String getBirthdayString(String msg) {
-        if (!msg.isEmpty()) System.out.println("\u001B[34m" + msg + "\u001B[0m");
-        Scanner input = new Scanner(System.in);
-        boolean valid = false;
-        String date = "";
-        while (!valid) {            
-            String birth = input.nextLine();
-            if (!birth.startsWith(" ") && birth.matches("(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d{2})") && !birth.isEmpty()) {
-                // Kiểm tra định dạng ngày
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
-                try {
-                    LocalDate localDate = LocalDate.parse(birth, formatter);
-                    // Định dạng lại chuỗi theo định dạng "dd/MM/yyyy"
-                    date = String.format("%02d/%02d/%04d", localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
-                    valid = true;
-                } catch (DateTimeParseException e) {
-                    System.out.println("\u001B[31m" + "Invalid date format. Please enter again." + "\u001B[0m");
+            if (!msg.isEmpty())
+                System.out.println("\u001B[34m" + msg + "\u001B[0m");
+            Scanner input = new Scanner(System.in);
+            boolean valid = false;
+            String date = "";
+            while (!valid) {
+                String birth = input.nextLine();
+                if (!birth.startsWith(" ") && birth.matches("(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d{2})") && !birth.isEmpty()) {
+                    // Kiểm tra định dạng ngày
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+                    try {
+                        LocalDate localDate = LocalDate.parse(birth, formatter);
+                        int dayOfMonth = localDate.getDayOfMonth();
+                        int monthValue = localDate.getMonthValue();
+                        int year = localDate.getYear();
+
+                        // Kiểm tra năm nhuận
+                        boolean isLeapYear = java.time.Year.of(year).isLeap();
+
+                        // Kiểm tra số ngày trong tháng 2
+                        int daysInFebruary = java.time.Month.FEBRUARY.length(isLeapYear);
+
+                        if (dayOfMonth <= daysInFebruary) {
+                            // Định dạng lại chuỗi theo định dạng "dd/MM/yyyy"
+                            date = String.format("%02d/%02d/%04d", dayOfMonth, monthValue, year);
+                            valid = true;
+                        } else {
+                            System.out.println("\u001B[31m" + "Invalid date format. Please enter again." + "\u001B[0m");
+                        }
+                    } catch (DateTimeParseException e) {
+                        System.out.println("\u001B[31m" + "Invalid date format. Please enter again." + "\u001B[0m");
+                    }
+                } else {
+                    System.out.println("\u001B[31m" + "Date cannot be validated (dd/mm/yyyy). Please enter again." + "\u001B[0m");
                 }
-            } else {
-                System.out.println("\u001B[31m" + "Date cannot be validated (dd/mm/yyyy). Please enter again." + "\u001B[0m");
             }
+            return date;
         }
-        return date;
-    }         
+
+        public static void main(String[] args) {
+            String birthday = getBirthdayString("Enter your birthday:");
+            System.out.println("Valid birthday: " + birthday);
+        }       
     public static int dayUserInput(){
         Scanner input = new Scanner(System.in);
         int option = 0;
@@ -363,7 +383,7 @@ public class Validate {
     }
     public static LocalDate parseDate(String input) throws DateTimeParseException {
         DateTimeFormatter formatter = new DateTimeFormatterBuilder()
-                .appendPattern("[dd/MM/yyyy][yyyy-MM-dd]")
+                .appendPattern("[dd/MM/yyyy]")
                 .toFormatter();
         return LocalDate.parse(input, formatter);
     }
