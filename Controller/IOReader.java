@@ -69,7 +69,7 @@ public class IOReader {
         return stdList;
     }
     
-        public static boolean saveFileCustomer(ArrayList<Customer> stdList, String path) {
+    public static boolean saveFileCustomer(ArrayList<Customer> stdList, String path) {
         try {
             try (FileOutputStream fos = new FileOutputStream(path);
                 OutputStreamWriter osw = new OutputStreamWriter(fos); 

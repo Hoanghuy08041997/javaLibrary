@@ -42,7 +42,7 @@ public class LoginController {
                         }
 
                         do {
-                            id = random.nextInt();                         
+                            id = random.nextInt(Integer.MAX_VALUE);                         
                             if (!ManagementLibrary.account.isEmpty()) {
                                 for (int k = 0; k < ManagementLibrary.account.size(); k++) {
                                     if (id == ManagementLibrary.account.get(k).getId()) {
@@ -56,7 +56,7 @@ public class LoginController {
                         } while (!valid);
                         String username = Validate.stringWithNumberUserInput("Username: ");
                         String password = Validate.stringWithNumberUserInput("Password: ");
-                        String email = Validate.stringUserInput("Email: ");
+                        String email = Validate.StringEmailInput("Email: ");
                         String phone = Validate.stringPhoneInput("Phone: ");
                         LocalDate birthday = Validate.parseDate(Validate.getBirthdayString("Birthday: "));
 
@@ -68,7 +68,8 @@ public class LoginController {
 
                     case 3:
                     System.out.println("Goodbye");
-                    IOReader.saveFileAccount(ManagementLibrary.account,"D:\\Java-PRO192\\ManagementLibrary\\src\\ListAccounts.txt");               
+                    IOReader.saveFileAccount(ManagementLibrary.account,"D:\\Java-PRO192\\ManagementLibrary\\src\\ListAccounts.txt");  
+                    IOReader.saveFileCustomer(ManagementLibrary.customer,"D:\\Java-PRO192\\ManagementLibrary\\src\\ListCustomer.txt");
                     System.exit(0);
                     break;
                 }

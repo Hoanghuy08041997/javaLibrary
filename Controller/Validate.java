@@ -1,6 +1,7 @@
 package Controller;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
@@ -245,49 +246,43 @@ public class Validate {
         return string;
     }
     public static String getBirthdayString(String msg) {
-            if (!msg.isEmpty())
-                System.out.println("\u001B[34m" + msg + "\u001B[0m");
-            Scanner input = new Scanner(System.in);
-            boolean valid = false;
-            String date = "";
-            while (!valid) {
-                String birth = input.nextLine();
-                if (!birth.startsWith(" ") && birth.matches("(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d{2})") && !birth.isEmpty()) {
-                    // Kiểm tra định dạng ngày
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
-                    try {
-                        LocalDate localDate = LocalDate.parse(birth, formatter);
-                        int dayOfMonth = localDate.getDayOfMonth();
-                        int monthValue = localDate.getMonthValue();
-                        int year = localDate.getYear();
+        if (!msg.isEmpty())
+            System.out.println("\u001B[34m" + msg + "\u001B[0m");
+        Scanner input = new Scanner(System.in);
+        boolean valid = false;
+        String date = "";
+        while (!valid) {
+            String birth = input.nextLine();
+            if (!birth.startsWith(" ")) {
+                String[] parts = birth.split("/");
+                if (parts.length == 3) {
+                    int day = Integer.parseInt(parts[0]);
+                    int month = Integer.parseInt(parts[1]);
+                    int year = Integer.parseInt(parts[2]);
 
-                        // Kiểm tra năm nhuận
-                        boolean isLeapYear = java.time.Year.of(year).isLeap();
+                    boolean isLeapYear = java.time.Year.of(year).isLeap();
 
-                        // Kiểm tra số ngày trong tháng 2
-                        int daysInFebruary = java.time.Month.FEBRUARY.length(isLeapYear);
-
-                        if (dayOfMonth <= daysInFebruary) {
+                    if (month >= 1 && month <= 12) {
+                        boolean isValidDay = day >= 1 && day <= Month.of(month).maxLength();
+                        if (isValidDay || (month == 2 && day == 29 && isLeapYear)) {
                             // Định dạng lại chuỗi theo định dạng "dd/MM/yyyy"
-                            date = String.format("%02d/%02d/%04d", dayOfMonth, monthValue, year);
+                            date = String.format("%02d/%02d/%04d", day, month, year);
                             valid = true;
                         } else {
-                            System.out.println("\u001B[31m" + "Invalid date format. Please enter again." + "\u001B[0m");
+                            System.out.println("\u001B[31m" + "Invalid date. Please enter again." + "\u001B[0m");
                         }
-                    } catch (DateTimeParseException e) {
-                        System.out.println("\u001B[31m" + "Invalid date format. Please enter again." + "\u001B[0m");
+                    } else {
+                        System.out.println("\u001B[31m" + "Invalid month. Please enter again." + "\u001B[0m");
                     }
                 } else {
-                    System.out.println("\u001B[31m" + "Date cannot be validated (dd/mm/yyyy). Please enter again." + "\u001B[0m");
+                    System.out.println("\u001B[31m" + "Invalid date format (dd/MM/yyyy). Please enter again." + "\u001B[0m");
                 }
+            } else {
+                System.out.println("\u001B[31m" + "Date cannot start with a space. Please enter again." + "\u001B[0m");
             }
-            return date;
         }
-
-        public static void main(String[] args) {
-            String birthday = getBirthdayString("Enter your birthday:");
-            System.out.println("Valid birthday: " + birthday);
-        }       
+        return date;
+    }
     public static int dayUserInput(){
         Scanner input = new Scanner(System.in);
         int option = 0;
@@ -337,6 +332,23 @@ public class Validate {
 
         return phoneNumber;
     }
+    public static String StringEmailInput(String msg) {
+        if (!msg.isEmpty())
+            System.out.println("\u001B[34m" + msg + "\u001B[0m");
+        Scanner input = new Scanner(System.in);
+        boolean valid = false;
+        String email = "";
+        while (!valid) {
+            String inputEmail = input.nextLine();
+            if (!inputEmail.startsWith(" ") && inputEmail.matches("[A-Za-z0-9]+@[A-Za-z0-9]+\\.[A-Za-z0-9]+") && !inputEmail.isEmpty()) {
+                email = inputEmail.trim();
+                valid = true;
+            } else {
+                System.out.println("\u001B[31m" + "Invalid email format. Please enter again." + "\u001B[0m");
+            }
+        }
+        return email;
+    }
     
     //Random
     public static int generateRandomId() {
@@ -383,7 +395,7 @@ public class Validate {
     }
     public static LocalDate parseDate(String input) throws DateTimeParseException {
         DateTimeFormatter formatter = new DateTimeFormatterBuilder()
-                .appendPattern("[dd/MM/yyyy]")
+                .appendPattern("[dd/MM/yyyy][yyyy-MM-dd]")
                 .toFormatter();
         return LocalDate.parse(input, formatter);
     }

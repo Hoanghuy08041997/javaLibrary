@@ -16,6 +16,7 @@ public class ManagementLibrary {
     
     public static void loadData(){
         account.addAll(IOReader.readFileAccount("D:\\Java-PRO192\\ManagementLibrary\\src\\ListAccounts.txt"));
+        customer.addAll(IOReader.readFileCustomer("D:\\Java-PRO192\\ManagementLibrary\\src\\ListCustomer.txt"));
     }
     
 }
