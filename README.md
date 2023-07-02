@@ -15,6 +15,7 @@ Mô tả: Xây dựng một chương trình quản lý thông tin sách và đ�
 - Thêm sách vào hàng mượn/ Trả sách – Manager/Reader(Có account của bản thân)
 - Nhắc nhở trả sách – Manager
 - Coming soon….
+
 Để triển khai chương trình quản lý thư viện trong Java theo mô hình MVC (Model-View-Controller), ta phân cấp các thành phần như sau:
 1.	Model:
 - Book: Lớp cha chứa thuộc tính chung của sách. Nhằm thừa kế cho các loại sách khác
