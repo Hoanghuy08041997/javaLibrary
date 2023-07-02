@@ -1,20 +1,20 @@
 # javaLibrary
 Dự án Java basic: Chương trình quản lý thư viện.
 Mô tả: Xây dựng một chương trình quản lý thông tin sách và độc giả trong thư viện có thể bao gồm các tính năng sau:
-• Đăng nhập set quyền: Quyền quản lý của Manager – Tạo userReader mới
-•	Thêm sách mới vào danh sách. - Manager
-•	Hiển thị danh sách sách trong thư viện. – Manager/Reader
-•	Tìm kiếm thông tin của một cuốn sách bằng mã số sách hoặc tên sách. -Manager/Reader
-•	Cập nhật thông tin của một cuốn sách. - Manager
-•	Xóa sách khỏi danh sách. - Manager
-•	Thêm độc giả mới vào danh sách. – Manager/Reader(Tạo account mới)
-•	Hiển thị danh sách độc giả trong thư viện. – Manager/Reader
-•	Tìm kiếm thông tin của một độc giả bằng mã số độc giả hoặc tên độc giả.-Manager
-•	Cập nhật thông tin của một độc giả.-Manager/Reader(Đăng nhập user đó)
-•	Xóa độc giả khỏi danh sách.-Manager
-•	Thêm sách vào hàng mượn/ Trả sách – Manager/Reader(Có account của bản thân)
-•	Nhắc nhở trả sách – Manager
-•	Coming soon….
+- Đăng nhập set quyền: Quyền quản lý của Manager – Tạo userReader mới
+- Thêm sách mới vào danh sách. - Manager
+- Hiển thị danh sách sách trong thư viện. – Manager/Reader
+- Tìm kiếm thông tin của một cuốn sách bằng mã số sách hoặc tên sách. -Manager/Reader
+- Cập nhật thông tin của một cuốn sách. - Manager
+- Xóa sách khỏi danh sách. - Manager
+- Thêm độc giả mới vào danh sách. – Manager/Reader(Tạo account mới)
+- Hiển thị danh sách độc giả trong thư viện. – Manager/Reader
+- Tìm kiếm thông tin của một độc giả bằng mã số độc giả hoặc tên độc giả.-Manager
+- Cập nhật thông tin của một độc giả.-Manager/Reader(Đăng nhập user đó)
+- Xóa độc giả khỏi danh sách.-Manager
+- Thêm sách vào hàng mượn/ Trả sách – Manager/Reader(Có account của bản thân)
+- Nhắc nhở trả sách – Manager
+- Coming soon….
 Để triển khai chương trình quản lý thư viện trong Java theo mô hình MVC (Model-View-Controller), ta phân cấp các thành phần như sau:
 1.	Model:
 •	Book: Lớp cha chứa thuộc tính chung của sách. Nhằm thừa kế cho các loại sách khác
