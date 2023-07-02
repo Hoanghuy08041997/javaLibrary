@@ -1,0 +1,1 @@
+IdBook, Name, KindOfBook, Author, DatePublic, TotalBook 
