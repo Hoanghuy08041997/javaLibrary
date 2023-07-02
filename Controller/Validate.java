@@ -332,7 +332,7 @@ public class Validate {
 
         return phoneNumber;
     }
-    public static String StringEmailInput(String msg) {
+    public static String stringEmailInput(String msg) {
         if (!msg.isEmpty())
             System.out.println("\u001B[34m" + msg + "\u001B[0m");
         Scanner input = new Scanner(System.in);
@@ -429,4 +429,6 @@ public class Validate {
 //
 //        return check;
 //    }   
+    
+
 }

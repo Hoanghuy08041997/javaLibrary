@@ -86,7 +86,7 @@ public class IOReader {
     }
     
     public static ArrayList<Customer> readFileCustomer(String path) {
-        ArrayList<Customer> stdList = new ArrayList<>();
+        ArrayList<Customer> customerList = new ArrayList<>();
 
         try (FileInputStream fis = new FileInputStream(path);
              InputStreamReader isr = new InputStreamReader(fis);
@@ -96,7 +96,7 @@ public class IOReader {
             while ((line = br.readLine()) != null) {
                 String[] fields = line.split(",");
 
-                if (fields.length == 4) { // Kiểm tra số lượng trường thông tin  
+                if (fields.length == 6) { // Check the number of fields
                     boolean hasNull = false;
                     for (String field : fields) {
                         if (field.trim().isEmpty()) {
@@ -110,9 +110,9 @@ public class IOReader {
                         String name = fields[1].trim();
                         String email = fields[2].trim();
                         String phone = fields[3].trim();
-                        LocalDate date = Validate.parseDate(fields[4].trim()) ;
-                        int level = Integer.parseInt(fields[6].trim());           
-                        stdList.add(new Customer(id,name,email,phone, phone,date,level));
+                        LocalDate date = Validate.parseDate(fields[4].trim());
+                        int level = Integer.parseInt(fields[5].trim());
+                        customerList.add(new Customer(id, name, email, phone, date, level));
                     }
                 } else {
                     System.out.println("Invalid number of fields: " + line);
@@ -121,7 +121,7 @@ public class IOReader {
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
         }
-        return stdList;
+        return customerList;
     }
     
     

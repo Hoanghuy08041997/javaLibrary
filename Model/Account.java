@@ -1,6 +1,7 @@
 package Model;
 
 import Controller.IOReader;
+import Controller.ManagementLibrary;
 import java.util.ArrayList;
 
 public class Account {
@@ -57,20 +58,14 @@ public class Account {
     }
     
     public static int checkAccount(Account s) {
-        ArrayList<Account> acc = new ArrayList<>(); 
-        acc.addAll(IOReader.readFileAccount("D:\\Java-PRO192\\ManagementLibrary\\src\\ListAccounts.txt"));
-        int i = 0;
-        boolean valid = false;
-        for (Account c : acc){
+
+        for (Account c : ManagementLibrary.account) {
             if (c.getUsername().equals(s.getUsername()) && c.getPassword().equals(s.getPassword())) {
-                i =  c.getId();
-                valid = true;
-                break;
-            } else valid = false;
+                return c.getLevel();
+            }
         }
-        if (valid) return i;
-        else return 0;
-    }
+        return 0;
+    }   
     
 }   
 

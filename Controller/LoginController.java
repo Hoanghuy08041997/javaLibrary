@@ -56,11 +56,11 @@ public class LoginController {
                         } while (!valid);
                         String username = Validate.stringWithNumberUserInput("Username: ");
                         String password = Validate.stringWithNumberUserInput("Password: ");
-                        String email = Validate.StringEmailInput("Email: ");
+                        String email = Validate.stringEmailInput("Email: ");
                         String phone = Validate.stringPhoneInput("Phone: ");
                         LocalDate birthday = Validate.parseDate(Validate.getBirthdayString("Birthday: "));
 
-                        Customer c = new Customer(id, username, password, email, phone, birthday, 1);
+                        Customer c = new Customer(id, username, email, phone, birthday, 1);
                         ManagementLibrary.account.add(new Account(username, password, 1, id));
                         ManagementLibrary.customer.add(c);
 
