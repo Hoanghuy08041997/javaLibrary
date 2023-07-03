@@ -9,7 +9,6 @@ public class Account {
     private String password;
     private int level;
     private int id;
-
     
     public Account(String username, String password) {
         this.username = username;
@@ -66,6 +65,7 @@ public class Account {
         }
         return 0;
     }   
+    
     
 }   
 

@@ -1,4 +1,3 @@
-
 package Controller;
 
 import View.Menu;
@@ -29,6 +28,9 @@ public class ManagerController {
                     case 4:
                         System.out.println("Hello4");
                         break;                   
+                    case 5:
+                        System.out.println("Hello");
+                        break;
                 }
             }
         };

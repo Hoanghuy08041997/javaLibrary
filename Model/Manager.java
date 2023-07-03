@@ -11,4 +11,5 @@ public class Manager extends People {
         super(id, name, email, phone, birthday, levelUser);
     }
     
+    
 }

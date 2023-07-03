@@ -4,9 +4,7 @@ public class BookBorrow extends Book {
     protected int idBook;
     protected int idCustomer;
     protected int dateBorrow;
-    
-    
-
+        
     public int getIdBook() {
         return idBook;
     }
@@ -30,7 +28,6 @@ public class BookBorrow extends Book {
     public void setDateBorrow(int dateBorrow) {
         this.dateBorrow = dateBorrow;
     }
-    
-    
+    //
     
 }

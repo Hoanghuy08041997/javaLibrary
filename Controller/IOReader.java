@@ -29,8 +29,7 @@ public class IOReader {
             return true;
         } catch (IOException e) { System.out.println("Error: " + e.getMessage());}
         return false;
-    }
-    
+    }  
     public static ArrayList<Account> readFileAccount(String path) {
         ArrayList<Account> stdList = new ArrayList<>();
 
@@ -69,6 +68,7 @@ public class IOReader {
         return stdList;
     }
     
+    //IO Customer
     public static boolean saveFileCustomer(ArrayList<Customer> stdList, String path) {
         try {
             try (FileOutputStream fos = new FileOutputStream(path);
@@ -84,7 +84,6 @@ public class IOReader {
         } catch (IOException e) { System.out.println("Error: " + e.getMessage());}
         return false;
     }
-    
     public static ArrayList<Customer> readFileCustomer(String path) {
         ArrayList<Customer> customerList = new ArrayList<>();
 
@@ -123,6 +122,5 @@ public class IOReader {
         }
         return customerList;
     }
-    
-    
+       
 }

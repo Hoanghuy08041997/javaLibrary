@@ -63,7 +63,6 @@ public class LoginController {
                         Customer c = new Customer(id, username, email, phone, birthday, 1);
                         ManagementLibrary.account.add(new Account(username, password, 1, id));
                         ManagementLibrary.customer.add(c);
-
                         break;
 
                     case 3:
@@ -74,8 +73,8 @@ public class LoginController {
                     break;
                 }
             };
-        };
-        
+        };      
         menu.run();
     }
+    
 }
