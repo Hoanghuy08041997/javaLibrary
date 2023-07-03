@@ -1,4 +1,4 @@
-####LƯU Ý: FOLLOW THEO FORM FILE BÊN TRÊN TRƯỚC KHI UPDATE ĐỂ TRÁNH BỊ LỖI
+# LƯU Ý: FOLLOW THEO FORM FILE BÊN TRÊN TRƯỚC KHI UPDATE ĐỂ TRÁNH BỊ LỖI
 
 # javaLibrary
 Dự án Java basic: Chương trình quản lý thư viện.
