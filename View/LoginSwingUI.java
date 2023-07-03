@@ -2,7 +2,6 @@ package View;
 
 import Controller.IOReader;
 import Controller.ManagementLibrary;
-import Controller.MethodController;
 import Controller.ValidateForSwing;
 import Model.Account;
 import Model.Customer;
@@ -64,9 +63,6 @@ public class LoginSwingUI extends JFrame {
                         break;
                     case 2:
                         JOptionPane.showMessageDialog(null, "WELCOME MANAGER");
-                        ManagerMenuUI managerMenu = new ManagerMenuUI();
-                        managerMenu.setVisible(true);
-                        dispose();
                         break;
                 }
             } else {
@@ -94,7 +90,9 @@ public class LoginSwingUI extends JFrame {
         });
 
         exitButton.addActionListener((ActionEvent e) -> {
-            MethodController.exit();
+            IOReader.saveFileAccount(ManagementLibrary.account, "D:\\Java-PRO192\\ManagementLibrary\\src\\ListAccounts.txt");
+            IOReader.saveFileCustomer(ManagementLibrary.customer, "D:\\Java-PRO192\\ManagementLibrary\\src\\ListCustomer.txt");
+            System.exit(0);
         });
     }
 
@@ -130,4 +128,5 @@ public class LoginSwingUI extends JFrame {
             loginSwingUI.setVisible(true);
         });
     }
+    
 }
