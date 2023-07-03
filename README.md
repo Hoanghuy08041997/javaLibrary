@@ -1,4 +1,6 @@
 # LƯU Ý: FOLLOW THEO FORM FILE BÊN TRÊN TRƯỚC KHI UPDATE ĐỂ TRÁNH BỊ LỖI
+# NẾU CÓ CẤC THƯ MỤC MỚI HÃY TẠO RIÊNG RA. TRÁNH VIỆC GHI ĐÈ FILE/MẤT FILE
+# VIỆC LIÊN KẾT SẼ THỰC HIỆN SAU
 
 # javaLibrary
 Dự án Java basic: Chương trình quản lý thư viện.
