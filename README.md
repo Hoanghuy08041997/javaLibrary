@@ -2,7 +2,7 @@
 # NẾU CÓ CẤC THƯ MỤC MỚI HÃY TẠO RIÊNG RA. TRÁNH VIỆC GHI ĐÈ FILE/MẤT FILE
 # VIỆC LIÊN KẾT SẼ THỰC HIỆN SAU
 
-# javaLibrary
+# YÊU CẦU CỦA DỰ ÁN BÊN DƯỚI
 Dự án Java basic: Chương trình quản lý thư viện.
 Mô tả: Xây dựng một chương trình quản lý thông tin sách và độc giả trong thư viện có thể bao gồm các tính năng sau:
 - Đăng nhập set quyền: Quyền quản lý của Manager – Tạo userReader mới
