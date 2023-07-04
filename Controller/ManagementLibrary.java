@@ -14,10 +14,4 @@ public class ManagementLibrary {
     public static ArrayList<Book> book = new ArrayList<>();
     public static ArrayList<BookBorrow> bookBorrow = new ArrayList<>();
     
-    public static void loadData(){
-        account.addAll(IOReader.readFileAccount("D:\\Java-PRO192\\ManagementLibrary\\src\\ListAccounts.txt"));
-        customer.addAll(IOReader.readFileCustomer("D:\\Java-PRO192\\ManagementLibrary\\src\\ListCustomer.txt"));
-        
-    }
-    
 }

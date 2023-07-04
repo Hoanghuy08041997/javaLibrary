@@ -2,6 +2,7 @@ package View;
 
 import Controller.IOReader;
 import Controller.ManagementLibrary;
+import Controller.MethodController;
 import Controller.ValidateForSwing;
 import Model.Account;
 import Model.Customer;
@@ -126,7 +127,7 @@ public class LoginSwingUI extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            ManagementLibrary.loadData();
+            MethodController.loadData();
             LoginSwingUI loginSwingUI = new LoginSwingUI();
             loginSwingUI.setVisible(true);
         });

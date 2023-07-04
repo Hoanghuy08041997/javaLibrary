@@ -1,14 +1,21 @@
 package Controller;
 
+import static Controller.ManagementLibrary.account;
+import static Controller.ManagementLibrary.customer;
 import Model.Customer;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MethodController {
 
+    public static void loadData(){
+        account.addAll(IOReader.readFileAccount("./src/ListAccounts.txt"));
+        customer.addAll(IOReader.readFileCustomer("./src/ListCustomer.txt"));
+        
+    }
     public static void exit(){
-        IOReader.saveFileAccount(ManagementLibrary.account, "D:\\Java-PRO192\\ManagementLibrary\\src\\ListAccounts.txt");
-        IOReader.saveFileCustomer(ManagementLibrary.customer, "D:\\Java-PRO192\\ManagementLibrary\\src\\ListCustomer.txt");
+        IOReader.saveFileAccount(ManagementLibrary.account, "./src/ListAccounts.txt");
+        IOReader.saveFileCustomer(ManagementLibrary.customer, "./src/ListCustomer.txt");
         System.exit(0);
     }
     
