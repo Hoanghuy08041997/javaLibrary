@@ -8,6 +8,7 @@ import java.util.List;
 
 public class MethodController {
 
+    //Method Backup Data
     public static void loadData(){
         account.addAll(IOReader.readFileAccount("./src/ListAccounts.txt"));
         customer.addAll(IOReader.readFileCustomer("./src/ListCustomer.txt"));
@@ -19,6 +20,7 @@ public class MethodController {
         System.exit(0);
     }
     
+    //Method Account
     public static List<Integer> searchAccount(String searchCriteria, String s) {
         List<Integer> matchingAccounts = new ArrayList<>();
         SearchPredicate<Customer> searchCriteriaByProperties = new SearchPredicate<>(searchCriteria, s);
@@ -30,4 +32,26 @@ public class MethodController {
         return matchingAccounts;
     }
     
+    
+    //Method of the Customer
+        public static void listAllBooks(){
+        
+        }
+        
+        public static void searchBooks(){
+
+        }
+
+        public static void lendBooks(){
+
+        } 
+
+        public static void returnBooks(){
+
+        }
+
+        public static void listLendingBooks(){
+
+        }
+    //
 }
