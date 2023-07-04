@@ -1,11 +1,11 @@
 package View;
 
 import Controller.LoginController;
-import Controller.ManagementLibrary;
+import Controller.MethodController;
 
 public class Run {
     public static void main(String[] args) {
-        ManagementLibrary.loadData();
+        MethodController.loadData();
         LoginController.LoginVerify();
     }
     
