@@ -7,14 +7,14 @@ import Model.Account;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 public class AccountManagementUI extends JPanel {
     private final JButton removeAccountButton;
     private JTextField searchField;
     private JComboBox<String> searchProperties;
-    private JList<String> accountList;
+    private final JTable accountTable;
 
     public AccountManagementUI() {
         setLayout(new GridBagLayout());
@@ -43,16 +43,16 @@ public class AccountManagementUI extends JPanel {
         searchButton.addActionListener((ActionEvent e) -> {
             String searchCriteria = searchField.getText();
             String selectedProperty = (String) searchProperties.getSelectedItem();
-            List<String> searchResults = performSearch(selectedProperty, searchCriteria);
+            List<Integer> searchResults = performSearch(selectedProperty, searchCriteria);
             updateAccountList(searchResults);
         });
         constraints.gridx = 2;
         constraints.weightx = 0.1;
         add(searchButton, constraints);
 
-        // Account list
-        accountList = new JList<>();
-        JScrollPane scrollPane = new JScrollPane(accountList);
+         // Account table
+        accountTable = new JTable();
+        JScrollPane scrollPane = new JScrollPane(accountTable);
         constraints.gridx = 0;
         constraints.gridy = 1;
         constraints.gridwidth = 3;
@@ -63,15 +63,10 @@ public class AccountManagementUI extends JPanel {
         // Remove account button
         removeAccountButton = new JButton("Remove account");
         removeAccountButton.addActionListener((ActionEvent e) -> {
-            int selectedIndex = accountList.getSelectedIndex();
-            if (selectedIndex != -1) {
-                String selectedAccountString = accountList.getSelectedValue();
-                int selectedAccountId = 0;
-                for (Account acc : ManagementLibrary.account){
-                    if (acc.toString().equals(selectedAccountString))
-                        selectedAccountId = acc.getId();
-                }
-                removeAccount(selectedAccountId);
+            int selectedRow = accountTable.getSelectedRow();
+            if (selectedRow != -1) {
+                int accountId = (int) accountTable.getValueAt(selectedRow, 3);
+                removeAccount(accountId);
             }
         });
         removeAccountButton.setPreferredSize(new Dimension(100, 30));
@@ -86,31 +81,33 @@ public class AccountManagementUI extends JPanel {
         setSize(size);
     }
 
-
     // Method to perform search based on given criteria //Done
-    private List<String> performSearch(String searchCriteria, String s) {
+    private List<Integer> performSearch(String searchCriteria, String s) {
         List<Integer> matchingAccounts = MethodController.searchAccount(searchCriteria, s);
-        List<String> searchResults = new ArrayList<>();
+        return matchingAccounts;
+    }
 
-        for (Integer accountId : matchingAccounts) {
+    // Method to update the account list with search results as a table
+    private void updateAccountList(List<Integer> searchResults) {
+        String[] columnNames = {"Username", "Password", "Level", "Id"};
+        Object[][] data = new Object[searchResults.size()][4];
+
+        for (int i = 0; i < searchResults.size(); i++) {
+            int accountId = searchResults.get(i);
+
             for (Account account : ManagementLibrary.account) {
-                if (account.getId() == accountId) {
-                    searchResults.add(account.toString());
+                if (account != null && account.getId() == accountId) {
+                    data[i][0] = account.getUsername().trim(); // Username
+                    data[i][1] = account.getPassword().trim(); // Password
+                    data[i][2] = account.getLevel(); // Level
+                    data[i][3] = account.getId(); // Id
                     break;
                 }
             }
         }
 
-        return searchResults;
-    }
-
-    // Method to update the account list with search results
-    private void updateAccountList(List<String> searchResults) {
-        DefaultListModel<String> listModel = new DefaultListModel<>();
-        for (String account : searchResults) {
-            listModel.addElement(account);
-        }
-        accountList.setModel(listModel);
+        DefaultTableModel tableModel = new DefaultTableModel(data, columnNames);
+        accountTable.setModel(tableModel);
     }
 
     // Method to remove selected account

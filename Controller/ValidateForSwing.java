@@ -76,15 +76,16 @@ public class ValidateForSwing {
         JTextField textField = new JTextField();
         boolean valid = false;
         String phoneNumber = null;
-        
-        while (!valid) {
+        boolean isCancelled = false; // Cờ chỉ định việc hủy đóng hộp thoại
+
+        while (!valid && !isCancelled) {
             int result = JOptionPane.showConfirmDialog(null, textField, "Phone", JOptionPane.OK_CANCEL_OPTION);
-            
+
             if (result == JOptionPane.OK_OPTION) {
                 String phoneStr = textField.getText();
-                
+
                 if (!phoneStr.isEmpty() && phoneStr.matches("^(09|\\+849)\\d{8}$")) {
-                    if (ValidateForSwing.isValidPhone(phoneStr)){
+                    if (ValidateForSwing.isValidPhone(phoneStr)) {
                         phoneStr = phoneStr.trim();
                         phoneNumber = phoneStr;
                         valid = true;
@@ -93,12 +94,16 @@ public class ValidateForSwing {
                     JOptionPane.showMessageDialog(null, "Wrong format. Please enter a valid 10-digit phone number with prefix 09 or +849.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                System.exit(0);
+                isCancelled = true; // Đặt cờ khi người dùng nhấn Cancel
             }
         }
-        
+
+        if (isCancelled) {
+            return ""; // Trả về giá trị rỗng nếu người dùng nhấn Cancel
+        }
+
         return phoneNumber;
-    }   
+    }
     public static boolean isValidPhone(String phone) {
         if (!phone.startsWith(" ") && phone.matches("[0-9]{10}")) {
             if (isDuplicatePhone(phone)) {
@@ -127,28 +132,35 @@ public class ValidateForSwing {
         JTextField textField = new JTextField();
         boolean valid = false;
         String email = "";
-        
-        while (!valid) {
+        boolean isCancelled = false; // Cờ chỉ định việc hủy đóng hộp thoại
+
+        while (!valid && !isCancelled) {
             int result = JOptionPane.showConfirmDialog(null, textField, "Email", JOptionPane.OK_CANCEL_OPTION);
-            
+
             if (result == JOptionPane.OK_OPTION) {
                 String inputEmail = textField.getText();
-                
+
                 if (!inputEmail.startsWith(" ") && inputEmail.matches("[A-Za-z0-9]+@[A-Za-z0-9]+\\.[A-Za-z0-9]+") && !inputEmail.isEmpty()) {
-                    if (ValidateForSwing.isValidEmail(inputEmail)){
+                    if (ValidateForSwing.isValidEmail(inputEmail)) {
                         email = inputEmail.trim();
                         valid = true;
-                    } else JOptionPane.showMessageDialog(null, "Email exited. Please enter again.", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Email already exists. Please enter again.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid email format. Please enter again.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                System.exit(0);
+                isCancelled = true; // Đặt cờ khi người dùng nhấn Cancel
             }
         }
-        
+
+        if (isCancelled) {
+            return ""; // Trả về giá trị rỗng nếu người dùng nhấn Cancel
+        }
+
         return email;
-    }  
+    }
     public static boolean isValidEmail(String email) {
 
         if (!email.startsWith(" ") && email.matches("[A-Za-z0-9]+@[A-Za-z0-9]+\\.[A-Za-z0-9]+") && !email.isEmpty()) {

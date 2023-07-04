@@ -43,7 +43,7 @@ public class ManagerMenuUI extends JFrame {
         // List books button
         listBooksButton = new JButton("1. List all books");
         listBooksButton.addActionListener((ActionEvent e) -> {
-            System.out.println("Hello1");
+            JOptionPane.showMessageDialog(this, "Coming soon...");
         });
         functionPanel.add(listBooksButton);
 
@@ -57,17 +57,16 @@ public class ManagerMenuUI extends JFrame {
         });
         functionPanel.add(listCustomersButton);
 
-        // Search book button
         searchBookButton = new JButton("3. Search book");
         searchBookButton.addActionListener((ActionEvent e) -> {
-
+            JOptionPane.showMessageDialog(this, "Coming soon...");
         });
         functionPanel.add(searchBookButton);
 
         // Search customer button
         searchCustomerButton = new JButton("4. Search customer");
         searchCustomerButton.addActionListener((ActionEvent e) -> {
-            System.out.println("Hello4");
+            JOptionPane.showMessageDialog(this, "Coming soon...");
         });
         functionPanel.add(searchCustomerButton);
 
@@ -94,7 +93,7 @@ public class ManagerMenuUI extends JFrame {
         // Remove book button
         removeBookButton = new JButton("7. Remove book");
         removeBookButton.addActionListener((ActionEvent e) -> {
-            // Handle remove book action
+            JOptionPane.showMessageDialog(this, "Coming soon...");
         });
         functionPanel.add(removeBookButton);
 
@@ -105,7 +104,7 @@ public class ManagerMenuUI extends JFrame {
         });
         functionPanel.add(exitButton);
 
-        splitPane.setRightComponent(new JScrollPane(contentPanel)); // Sử dụng JScrollPane để cuộn nếu nội dung quá lớn
+        splitPane.setRightComponent(new JScrollPane(contentPanel));
 
         setContentPane(splitPane);
         setResizable(false);

@@ -5,12 +5,9 @@ import Controller.ManagementLibrary;
 import Controller.MethodController;
 import Controller.ValidateForSwing;
 import Model.Account;
-import Model.Customer;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.time.LocalDate;
-import java.util.Random;
 
 public class LoginSwingUI extends JFrame {
     private final JTextField usernameTextField;
@@ -20,6 +17,7 @@ public class LoginSwingUI extends JFrame {
     private final JButton exitButton;
 
     public LoginSwingUI() {
+        
         setTitle("Form Login Menu");
         setSize(400, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -78,54 +76,22 @@ public class LoginSwingUI extends JFrame {
         });
 
         createAccountButton.addActionListener((ActionEvent e) -> {
-            int id = generateRandomId();
-            String username = usernameTextField.getText();
-            if (ValidateForSwing.isValidUsername(username)){
-            String password = new String(passwordField.getPassword());           
+            CreateAccountUI createAccountUI = new CreateAccountUI();
+            
+            String us = usernameTextField.getText();
+            String pd = new String(passwordField.getPassword());
             boolean validPassword = ValidateForSwing.checkPassword(passwordField);
-                if (validPassword) {
-                    String email = ValidateForSwing.getEmailInput();
-                    String phone = ValidateForSwing.getPhone09Input();
-                    LocalDate birthday = ValidateForSwing.parseDate(ValidateForSwing.getBirthdayString());
-                    Customer c = new Customer(id, username, email, phone, birthday, 1);
-                    ManagementLibrary.account.add(new Account(username, password, 1, id));
-                    ManagementLibrary.customer.add(c);
-
-                    JOptionPane.showMessageDialog(null, "Account created successfully!");         
-                } else JOptionPane.showMessageDialog(null, "Invalid password. Password must be at least 8 characters long and contain at least one digit, one letter, and one special character.", "Error", JOptionPane.ERROR_MESSAGE);  
-            }           
+            if (validPassword) {
+                createAccountUI.createAccountForCall(us,pd);
+            }
         });
+
 
         exitButton.addActionListener((ActionEvent e) -> {
             IOReader.saveFileAccount(ManagementLibrary.account, "D:\\Java-PRO192\\ManagementLibrary\\src\\ListAccounts.txt");
             IOReader.saveFileCustomer(ManagementLibrary.customer, "D:\\Java-PRO192\\ManagementLibrary\\src\\ListCustomer.txt");
             System.exit(0);
         });
-    }
-
-    private int generateRandomId() {
-        int id;
-        boolean valid = false;
-        Random random = new Random();
-
-        if (ManagementLibrary.account.isEmpty()) {
-            valid = true;
-        }
-
-        do {
-            id = random.nextInt(Integer.MAX_VALUE);                         
-            if (!ManagementLibrary.account.isEmpty()) {
-                for (int k = 0; k < ManagementLibrary.account.size(); k++) {
-                    if (id == ManagementLibrary.account.get(k).getId()) {
-                       valid = false;
-                        break;
-                    } else {
-                        valid = true;
-                    }
-                }
-            }
-        } while (!valid);
-        return id;
     }
 
     public static void main(String[] args) {

@@ -18,8 +18,10 @@ public class CreateAccountUI extends JPanel {
     private final JButton createAccountButton;
     private final JButton saveButton;
 
+    
+    
     public CreateAccountUI() {
-        setLayout(new GridLayout(3, 2));
+        setLayout(new GridLayout(4, 2));
 
         JLabel usernameLabel = new JLabel("Username: ");
         usernameTextField = new JTextField();
@@ -38,32 +40,16 @@ public class CreateAccountUI extends JPanel {
         add(saveButton);
 
         createAccountButton.addActionListener((ActionEvent e) -> {
-            int id = generateRandomId();
-            String username = usernameTextField.getText();
-            if (ValidateForSwing.isValidUsername(username)){
-                String password = new String(passwordField.getPassword());
-                boolean validPassword = ValidateForSwing.checkPassword(passwordField);
-                if (validPassword) {
-                    String email = ValidateForSwing.getEmailInput();
-                    String phone = ValidateForSwing.getPhone09Input();
-                    LocalDate birthday = ValidateForSwing.parseDate(ValidateForSwing.getBirthdayString());
-                    Customer c = new Customer(id, username, email, phone, birthday, 1);
-                    Account account = new Account(username, password, 1, id);
-                    ManagementLibrary.account.add(account);
-                    ManagementLibrary.customer.add(c);
-                    // Thêm tài khoản vào danh sách và hiển thị thông báo
-                    JOptionPane.showMessageDialog(null, "Account created successfully!");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Invalid password. Password must be at least 8 characters long and contain at least one digit, one letter, and one special character.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
+            String us1 = usernameTextField.getText();
+            String pd1 = new String(passwordField.getPassword());
+            this.createAccount(us1,pd1);
         });
 
         saveButton.addActionListener((ActionEvent e) -> {
             MethodController.saveData();
         });
         
-        Dimension size = new Dimension(300, 650);
+        Dimension size = new Dimension(600, 200);
         setPreferredSize(size);
         setSize(size);
     }
@@ -90,4 +76,109 @@ public class CreateAccountUI extends JPanel {
         } while (!valid);
         return id;
     }
+    
+    public void createAccount(String username,String password){
+        int id = generateRandomId();
+        if (ValidateForSwing.isValidUsername(username)) {
+            boolean validPassword = ValidateForSwing.checkPassword(passwordField);
+            
+            if (validPassword) {
+                String email = "";
+                String phone = "";
+                LocalDate birthday = null;
+
+                boolean isCancelled = false; 
+
+                // Hỏi thông tin email
+                while (email.isEmpty() && !isCancelled) {
+                    email = ValidateForSwing.getEmailInput();
+                    if (email.isEmpty()) {
+                        int option = JOptionPane.showConfirmDialog(null, "Do you want to cancel creating an account?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                        if (option == JOptionPane.YES_OPTION) {
+                            isCancelled = true; // Đặt cờ nếu người dùng chọn Cancel
+                        }
+                    }
+                }
+
+                // Hỏi thông tin số điện thoại
+                while (phone.isEmpty() && !isCancelled) {
+                    phone = ValidateForSwing.getPhone09Input();
+                    if (phone.isEmpty()) {
+                        int option = JOptionPane.showConfirmDialog(null, "Do you want to cancel creating an account?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                        if (option == JOptionPane.YES_OPTION) {
+                            isCancelled = true; // Đặt cờ nếu người dùng chọn Cancel
+                        }
+                    }
+                }
+
+                // Hỏi thông tin ngày sinh
+                while (birthday == null && !isCancelled) {
+                    String birthdayString = ValidateForSwing.getBirthdayString();
+                    birthday = ValidateForSwing.parseDate(birthdayString);
+                    if (birthday == null) {
+                        int option = JOptionPane.showConfirmDialog(null, "Do you want to cancel creating an account?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                        if (option == JOptionPane.YES_OPTION) {
+                            isCancelled = true; // Đặt cờ nếu người dùng chọn Cancel
+                        }
+                    }
+                }
+
+                if (!isCancelled) {
+                    Customer c = new Customer(id, username, email, phone, birthday, 1);
+                    ManagementLibrary.account.add(new Account(username, password, 1, id));
+                    ManagementLibrary.customer.add(c);
+                    JOptionPane.showMessageDialog(null, "Account created successfully!");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid password. Password must be at least 8 characters long and contain at least one digit, one letter, and one special character.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+    
+    public void createAccountForCall(String username,String password){
+        int id = generateRandomId();
+        String email = "";
+        String phone = "";
+        LocalDate birthday = null;
+        boolean isCancelled = false; 
+
+        while (email.isEmpty() && !isCancelled) {
+            email = ValidateForSwing.getEmailInput();
+            if (email.isEmpty()) {
+                int option = JOptionPane.showConfirmDialog(null, "Do you want to cancel creating an account?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                if (option == JOptionPane.YES_OPTION) {
+                    isCancelled = true; // Đặt cờ nếu người dùng chọn Cancel
+                }
+            }
+        }
+      
+        while (phone.isEmpty() && !isCancelled) {
+            phone = ValidateForSwing.getPhone09Input();
+            if (phone.isEmpty()) {
+                int option = JOptionPane.showConfirmDialog(null, "Do you want to cancel creating an account?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                if (option == JOptionPane.YES_OPTION) {
+                    isCancelled = true; // Đặt cờ nếu người dùng chọn Cancel
+                }
+            }
+        }
+
+        while (birthday == null && !isCancelled) {
+            String birthdayString = ValidateForSwing.getBirthdayString();
+            birthday = ValidateForSwing.parseDate(birthdayString);
+            if (birthday == null) {
+                int option = JOptionPane.showConfirmDialog(null, "Do you want to cancel creating an account?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                if (option == JOptionPane.YES_OPTION) {
+                    isCancelled = true; // Đặt cờ nếu người dùng chọn Cancel
+                }
+            }
+        }
+
+        if (!isCancelled) {
+            Customer c = new Customer(id, username, email, phone, birthday, 1);
+            ManagementLibrary.account.add(new Account(username, password, 1, id));
+            ManagementLibrary.customer.add(c);
+            JOptionPane.showMessageDialog(null, "Account created successfully!");
+        }
+    }
 }
+
