@@ -20,7 +20,7 @@ public class ManagerController {
                         System.out.println("Hello1");
                         break;
                     case 2:
-                        System.out.println("Hello2");
+                        System.out.println(ManagementLibrary.customer);
                         break;
                     case 3:
                         System.out.println("Hello3");
