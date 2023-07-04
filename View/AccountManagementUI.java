@@ -10,13 +10,13 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountManagementPanel extends JPanel {
+public class AccountManagementUI extends JPanel {
     private final JButton removeAccountButton;
     private JTextField searchField;
     private JComboBox<String> searchProperties;
     private JList<String> accountList;
 
-    public AccountManagementPanel() {
+    public AccountManagementUI() {
         setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
 

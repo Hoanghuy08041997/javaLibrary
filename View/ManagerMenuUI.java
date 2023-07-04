@@ -92,7 +92,7 @@ public final class ManagerMenuUI extends JFrame {
                 
                 frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-                AccountManagementPanel panel = new AccountManagementPanel();
+                AccountManagementUI panel = new AccountManagementUI();
                 frame.getContentPane().add(panel);
 
                 frame.pack();
