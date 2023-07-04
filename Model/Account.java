@@ -53,6 +53,12 @@ public class Account {
     protected void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "Account{" + "username=" + username + ", password=" + password + ", level=" + level + ", id=" + id + '}';
+    }
+     
     
     public static int checkAccount(Account s) {
 

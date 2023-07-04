@@ -87,7 +87,17 @@ public final class ManagerMenuUI extends JFrame {
 
         removeAccountButton = new JButton("7. Remove account");
         removeAccountButton.addActionListener((ActionEvent e) -> {
-            // Handle remove account action
+        SwingUtilities.invokeLater(() -> {
+                JFrame frame = new JFrame();
+                
+                frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+                AccountManagementPanel panel = new AccountManagementPanel();
+                frame.getContentPane().add(panel);
+
+                frame.pack();
+                frame.setVisible(true);
+            });
         });
         removeAccountButton.setPreferredSize(new Dimension(200, 50));
         constraints.gridx = 1;
