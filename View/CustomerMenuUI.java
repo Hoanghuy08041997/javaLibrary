@@ -40,12 +40,20 @@ public final class CustomerMenuUI extends JFrame {
         constraints.anchor = GridBagConstraints.CENTER;
         mainPanel.add(titleLabel, constraints);
 
+        // Note label
+        JLabel noteLabel = new JLabel("(Version for Customer)", SwingConstants.CENTER);
+        noteLabel.setFont(new Font("Arial", Font.BOLD, 12));
+        noteLabel.setForeground(Color.RED);
+        constraints.gridy = 1;
+        constraints.gridwidth = 2;
+        mainPanel.add(noteLabel, constraints);
+
         listBooksButton = new JButton("1. List all books");
         listBooksButton.addActionListener((ActionEvent e) -> {
             // Handle list all books action
         });
         listBooksButton.setPreferredSize(new Dimension(200, 50));
-        constraints.gridy = 1;
+        constraints.gridy = 2;
         constraints.gridwidth = 1;
         mainPanel.add(listBooksButton, constraints);
 
@@ -63,7 +71,7 @@ public final class CustomerMenuUI extends JFrame {
         });
         lendBookButton.setPreferredSize(new Dimension(200, 50));
         constraints.gridx = 0;
-        constraints.gridy = 2;
+        constraints.gridy = 3;
         mainPanel.add(lendBookButton, constraints);
 
         returnBookButton = new JButton("4. Return book");
@@ -80,7 +88,7 @@ public final class CustomerMenuUI extends JFrame {
         });
         listLendingBooksButton.setPreferredSize(new Dimension(200, 50));
         constraints.gridx = 0;
-        constraints.gridy = 3;
+        constraints.gridy = 4;
         mainPanel.add(listLendingBooksButton, constraints);
 
         exitButton = new JButton("Exit");
@@ -89,11 +97,28 @@ public final class CustomerMenuUI extends JFrame {
         });
         exitButton.setPreferredSize(new Dimension(200, 50));
         constraints.gridx = 1;
-        constraints.gridy = 3; // Update the gridy value to match the position of listLendingBooksButton
+        constraints.gridy = 4;
         mainPanel.add(exitButton, constraints);
 
+        // Add version label
+        JLabel versionLabel = new JLabel("Version 1.0");
+        versionLabel.setFont(new Font("Arial", Font.PLAIN, 10));
+        versionLabel.setForeground(Color.GRAY);
+
+        JPanel versionPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        versionPanel.setBackground(Color.WHITE);
+        versionPanel.add(versionLabel);
+
+        constraints.gridx = 1;
+        constraints.gridy = 5; // Set the gridy value for the versionPanel
+        constraints.anchor = GridBagConstraints.SOUTHEAST;
+        mainPanel.add(versionPanel, constraints);
+
         setContentPane(mainPanel);
+
+        setResizable(false); // Lock user resizing
     }
+
     
     public void run() {
         initializeUI();

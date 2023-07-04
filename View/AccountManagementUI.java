@@ -27,12 +27,15 @@ public class AccountManagementUI extends JPanel {
         searchProperties.setPreferredSize(new Dimension(75, 25));
         constraints.gridx = 0;
         constraints.gridy = 0;
+        constraints.weightx = 0.1;
         add(searchProperties, constraints);
 
         // Search field
         searchField = new JTextField(10);
         constraints.gridx = 1;
         constraints.gridy = 0;
+        constraints.weightx = 0.8; 
+        constraints.fill = GridBagConstraints.HORIZONTAL;
         add(searchField, constraints);
 
         // Search button
@@ -44,6 +47,7 @@ public class AccountManagementUI extends JPanel {
             updateAccountList(searchResults);
         });
         constraints.gridx = 2;
+        constraints.weightx = 0.1;
         add(searchButton, constraints);
 
         // Account list
@@ -52,6 +56,7 @@ public class AccountManagementUI extends JPanel {
         constraints.gridx = 0;
         constraints.gridy = 1;
         constraints.gridwidth = 3;
+        constraints.weighty = 0.8;
         constraints.fill = GridBagConstraints.BOTH;
         add(scrollPane, constraints);
 
@@ -71,8 +76,8 @@ public class AccountManagementUI extends JPanel {
         });
         removeAccountButton.setPreferredSize(new Dimension(200, 50));
         constraints.gridy = 2;
+        constraints.weighty = 0.1;
         add(removeAccountButton, constraints);
-        
     }
 
     // Method to perform search based on given criteria //Done
