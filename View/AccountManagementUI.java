@@ -24,14 +24,14 @@ public class AccountManagementUI extends JPanel {
         String[] options = {"name", "email", "phone"};
 
         searchProperties = new JComboBox<>(options);
-        searchProperties.setPreferredSize(new Dimension(75, 25));
+        searchProperties.setPreferredSize(new Dimension(100, 25));
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.weightx = 0.1;
         add(searchProperties, constraints);
 
         // Search field
-        searchField = new JTextField(10);
+        searchField = new JTextField(20);
         constraints.gridx = 1;
         constraints.gridy = 0;
         constraints.weightx = 0.8; 
@@ -74,11 +74,18 @@ public class AccountManagementUI extends JPanel {
                 removeAccount(selectedAccountId);
             }
         });
-        removeAccountButton.setPreferredSize(new Dimension(200, 50));
+        removeAccountButton.setPreferredSize(new Dimension(100, 30));
         constraints.gridy = 2;
         constraints.weighty = 0.1;
+        constraints.insets = new Insets(0, 0, 0, 0); 
         add(removeAccountButton, constraints);
+
+        // Set frame size
+        Dimension size = new Dimension(800, 650);
+        setPreferredSize(size);
+        setSize(size);
     }
+
 
     // Method to perform search based on given criteria //Done
     private List<String> performSearch(String searchCriteria, String s) {
@@ -120,7 +127,7 @@ public class AccountManagementUI extends JPanel {
         if (confirmed == JOptionPane.YES_OPTION) {
             // Tìm và xóa tài khoản trong ManagementLibrary.account
             for (int i = 0; i < ManagementLibrary.account.size(); i++) {
-                if ( ManagementLibrary.account.get(i).getId() == idCustomer) {
+                if (ManagementLibrary.account.get(i).getId() == idCustomer) {
                     ManagementLibrary.account.remove(i);
                     break;
                 }
@@ -135,5 +142,4 @@ public class AccountManagementUI extends JPanel {
             }
         }
     }
-
 }

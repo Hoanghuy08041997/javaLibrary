@@ -18,9 +18,7 @@ public class Account {
         this.password = password;
         this.level = level;
         this.id = id;
-    }
-    
-    
+    }  
 
     public String getUsername() {
         return username;
@@ -56,7 +54,7 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account{" + "username=" + username + ", password=" + password + ", level=" + level + ", id=" + id + '}';
+        return "Account [" + " Username= " + username + " ||  Password=" + password + "  || Level=" + level + " || ID=" + id + ']';
     }
      
     
