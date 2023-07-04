@@ -19,8 +19,9 @@ public class ManagerMenuUI extends JFrame {
     private JButton removeBookButton;
     private JButton exitButton;
 
-    private final AccountManagementUI accountManagementUI; 
+    private final AccountManagementUI accountManagementUI;
     private final CreateAccountUI createAccountUI;
+
     public ManagerMenuUI() {
         setTitle("Manager Menu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,6 +32,9 @@ public class ManagerMenuUI extends JFrame {
     }
 
     private void initializeUI() {
+        // Create the mainPanel with BorderLayout
+        JPanel mainPanel = new JPanel(new BorderLayout());
+
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         splitPane.setDividerSize(5);
 
@@ -50,10 +54,10 @@ public class ManagerMenuUI extends JFrame {
         // List customers button
         listCustomersButton = new JButton("2. List all customers");
         listCustomersButton.addActionListener((ActionEvent e) -> {
-                contentPanel.removeAll();
-                contentPanel.add(new CustomerListUI(ManagementLibrary.customer));
-                contentPanel.revalidate();
-                contentPanel.repaint();
+            contentPanel.removeAll();
+            contentPanel.add(new CustomerListUI(ManagementLibrary.customer));
+            contentPanel.revalidate();
+            contentPanel.repaint();
         });
         functionPanel.add(listCustomersButton);
 
@@ -106,14 +110,33 @@ public class ManagerMenuUI extends JFrame {
 
         splitPane.setRightComponent(new JScrollPane(contentPanel));
 
-        setContentPane(splitPane);
-        setResizable(false);
-    }
+        // Create a new JPanel for the login info button
+        JPanel loginInfoPanel = new JPanel();
+        loginInfoPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
-    public final void run() {
-        initializeUI();
-        pack();
-        setLocationRelativeTo(null);
-        setVisible(true);
-    }
+        JButton loginInfoButton = new JButton("Your Account");
+        loginInfoButton.addActionListener((ActionEvent e) -> {
+        LoginInfoUI loginInfoUI = new LoginInfoUI();
+        loginInfoUI.setVisible(true);
+        });
+
+            // Add the login info button to the panel
+            loginInfoPanel.add(loginInfoButton);
+
+            // Add the splitPane to the center of the mainPanel
+            mainPanel.add(splitPane, BorderLayout.CENTER);
+
+            // Add the loginInfoPanel to the north of the mainPanel
+            mainPanel.add(loginInfoPanel, BorderLayout.NORTH);
+
+            setContentPane(mainPanel);
+            setResizable(false);
+        }
+
+        public final void run() {
+            initializeUI();
+            pack();
+            setLocationRelativeTo(null);
+            setVisible(true);
+        }
 }

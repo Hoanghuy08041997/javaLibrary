@@ -7,7 +7,12 @@ public class Account {
     private String password;
     private int level;
     private int id;
+
     
+    public Account(int id) {
+        this.id = id;
+    }
+     
     public Account(String username, String password) {
         this.username = username;
         this.password = password;
@@ -58,7 +63,7 @@ public class Account {
     }
      
     
-    public static int checkAccount(Account s) {
+    public static int checkLevelAccount(Account s) {
 
         for (Account c : ManagementLibrary.account) {
             if (c.getUsername().equals(s.getUsername()) && c.getPassword().equals(s.getPassword())) {
@@ -67,6 +72,16 @@ public class Account {
         }
         return 0;
     }   
+    
+    public static void returnAccount(Account s) {
+
+        for (Customer c : ManagementLibrary.customer) {
+            if (c.getName().equals(s.getUsername())) {
+                ManagementLibrary.logged.clear();
+                ManagementLibrary.logged.add(c);
+            }
+        }
+    }  
     
     
 }   

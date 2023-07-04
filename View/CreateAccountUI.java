@@ -147,7 +147,7 @@ public class CreateAccountUI extends JPanel {
             if (email.isEmpty()) {
                 int option = JOptionPane.showConfirmDialog(null, "Do you want to cancel creating an account?", "Confirmation", JOptionPane.YES_NO_OPTION);
                 if (option == JOptionPane.YES_OPTION) {
-                    isCancelled = true; // Đặt cờ nếu người dùng chọn Cancel
+                    isCancelled = true; 
                 }
             }
         }
@@ -157,7 +157,7 @@ public class CreateAccountUI extends JPanel {
             if (phone.isEmpty()) {
                 int option = JOptionPane.showConfirmDialog(null, "Do you want to cancel creating an account?", "Confirmation", JOptionPane.YES_NO_OPTION);
                 if (option == JOptionPane.YES_OPTION) {
-                    isCancelled = true; // Đặt cờ nếu người dùng chọn Cancel
+                    isCancelled = true; 
                 }
             }
         }
@@ -168,7 +168,7 @@ public class CreateAccountUI extends JPanel {
             if (birthday == null) {
                 int option = JOptionPane.showConfirmDialog(null, "Do you want to cancel creating an account?", "Confirmation", JOptionPane.YES_NO_OPTION);
                 if (option == JOptionPane.YES_OPTION) {
-                    isCancelled = true; // Đặt cờ nếu người dùng chọn Cancel
+                    isCancelled = true; 
                 }
             }
         }

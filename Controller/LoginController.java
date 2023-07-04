@@ -17,7 +17,7 @@ public class LoginController {
                     case 1:
                         String us = Validate.stringWithNumberUserInput("Username: ");
                         String pd = Validate.stringWithNumberUserInput("Password: ");  
-                        int level = Account.checkAccount(new Account(us,pd));
+                        int level = Account.checkLevelAccount(new Account(us,pd));
                         switch (level) {
                             case 1:
                                 System.out.println("WELCOME CUSTOMER");

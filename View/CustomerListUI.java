@@ -10,13 +10,10 @@ public class CustomerListUI extends JPanel {
     public CustomerListUI(ArrayList<Customer> customers) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
-        // Tạo danh sách các thuộc tính của khách hàng
         String[] columnNames = {"ID", "Name", "Email", "Phone", "Birthday", "Level"};
         
-        // Tạo một DefaultTableModel để chứa dữ liệu của bảng
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
         
-        // Thêm dữ liệu từ danh sách khách hàng vào bảng
         for (Customer customer : customers) {
             Object[] rowData = {customer.getId(), customer.getName(), customer.getEmail(),
                                 customer.getPhone(), customer.getBirthday(), customer.getLevelUser()};
@@ -35,7 +32,6 @@ public class CustomerListUI extends JPanel {
         table.getColumnModel().getColumn(4).setPreferredWidth(80);  // Birthday
         table.getColumnModel().getColumn(5).setPreferredWidth(65);  // Level
         
-        // Đặt JTable trong JScrollPane để hỗ trợ cuộn nếu cần
         JScrollPane scrollPane = new JScrollPane(table);
         
         scrollPane.setPreferredSize(new Dimension(800, 550));

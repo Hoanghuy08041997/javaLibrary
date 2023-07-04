@@ -52,18 +52,21 @@ public class LoginSwingUI extends JFrame {
             boolean validPassword = ValidateForSwing.checkPassword(passwordField);
 
             if (validPassword) {
-                int level = Account.checkAccount(new Account(us, pd));
+                Account s = new Account(us, pd);
+                int level = Account.checkLevelAccount(s);
                 switch (level) {
                     case 0:
                         JOptionPane.showMessageDialog(null, "WRONG USERNAME OR PASSWORD. PLEASE DOUBLE CHECK OR CREATE ACCOUNT.", "Error", JOptionPane.ERROR_MESSAGE);
                         break;
                     case 1:
+                        Account.returnAccount(s);
                         JOptionPane.showMessageDialog(null, "WELCOME CUSTOMER");
                         CustomerMenuUI customerMenu = new CustomerMenuUI();
                         customerMenu.setVisible(true);
                         dispose();
                         break;
                     case 2:
+                        Account.returnAccount(s);
                         JOptionPane.showMessageDialog(null, "WELCOME MANAGER");
                         ManagerMenuUI managerMenu = new ManagerMenuUI();
                         managerMenu.setVisible(true);
