@@ -4,8 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.function.Predicate;
 
 public class SearchPredicate<T> implements Predicate<T> {
-    private String property;
-    private Object value;
+    private final String property;
+    private final Object value;
 
     public SearchPredicate(String property, Object value) {
         this.property = property;

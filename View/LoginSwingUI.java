@@ -63,6 +63,9 @@ public class LoginSwingUI extends JFrame {
                         break;
                     case 2:
                         JOptionPane.showMessageDialog(null, "WELCOME MANAGER");
+                        ManagerMenuUI managerMenu = new ManagerMenuUI();
+                        managerMenu.setVisible(true);
+                        dispose();
                         break;
                 }
             } else {
