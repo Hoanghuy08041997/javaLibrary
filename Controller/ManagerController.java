@@ -1,10 +1,7 @@
 package Controller;
 
-import static Controller.ManagementLibrary.account;
-import Model.Account;
 import View.Menu;
-import java.util.List;
-import java.util.stream.Collectors;
+
 
 public class ManagerController {
     public static void managerMenu(){

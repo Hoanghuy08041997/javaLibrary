@@ -14,6 +14,12 @@ public class MethodController {
         customer.addAll(IOReader.readFileCustomer("./src/ListCustomer.txt"));
         
     }
+    
+    public static void saveData(){
+        IOReader.saveFileAccount(ManagementLibrary.account, "./src/ListAccounts.txt");
+        IOReader.saveFileCustomer(ManagementLibrary.customer, "./src/ListCustomer.txt");  
+    }
+    
     public static void exit(){
         IOReader.saveFileAccount(ManagementLibrary.account, "./src/ListAccounts.txt");
         IOReader.saveFileCustomer(ManagementLibrary.customer, "./src/ListCustomer.txt");

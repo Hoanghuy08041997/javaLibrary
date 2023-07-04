@@ -1,7 +1,7 @@
 package View;
 
+import Controller.ManagementLibrary;
 import Controller.MethodController;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,12 +20,14 @@ public class ManagerMenuUI extends JFrame {
     private JButton exitButton;
 
     private final AccountManagementUI accountManagementUI; 
+    private final CreateAccountUI createAccountUI;
     public ManagerMenuUI() {
         setTitle("Manager Menu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(1000, 750));
         run();
         accountManagementUI = new AccountManagementUI();
+        createAccountUI = new CreateAccountUI();
     }
 
     private void initializeUI() {
@@ -48,7 +50,10 @@ public class ManagerMenuUI extends JFrame {
         // List customers button
         listCustomersButton = new JButton("2. List all customers");
         listCustomersButton.addActionListener((ActionEvent e) -> {
-            System.out.println("Hello2");
+                contentPanel.removeAll();
+                contentPanel.add(new CustomerListUI(ManagementLibrary.customer));
+                contentPanel.revalidate();
+                contentPanel.repaint();
         });
         functionPanel.add(listCustomersButton);
 
@@ -69,7 +74,10 @@ public class ManagerMenuUI extends JFrame {
         // Add account button
         addAccountButton = new JButton("5. Add account");
         addAccountButton.addActionListener((ActionEvent e) -> {
-            // Handle add account action
+            contentPanel.removeAll();
+            contentPanel.add(createAccountUI);
+            contentPanel.revalidate();
+            contentPanel.repaint();
         });
         functionPanel.add(addAccountButton);
 

@@ -6,8 +6,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public final class CustomerMenuUI extends JFrame {
-    private JPanel mainPanel;
-    private JLabel titleLabel;
+    private JSplitPane splitPane;
+    private JPanel functionPanel;
+    private JPanel contentPanel;
     private JButton listBooksButton;
     private JButton searchBookButton;
     private JButton lendBookButton;
@@ -18,108 +19,68 @@ public final class CustomerMenuUI extends JFrame {
     public CustomerMenuUI() {
         setTitle("Customer Menu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(600, 450));
+        setPreferredSize(new Dimension(1000, 750));
         run();
     }
 
     private void initializeUI() {
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new GridBagLayout());
-        mainPanel.setBackground(Color.WHITE);
+        
+        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        splitPane.setDividerSize(5);
 
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.insets = new Insets(10, 20, 10, 20);
+        functionPanel = new JPanel();
+        functionPanel.setLayout(new GridLayout(8, 1));
+        splitPane.setLeftComponent(functionPanel);
 
-        titleLabel = new JLabel("Customer Menu", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        titleLabel.setForeground(Color.BLUE);
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        constraints.gridwidth = 2;
-        constraints.anchor = GridBagConstraints.CENTER;
-        mainPanel.add(titleLabel, constraints);
-
-        // Note label
-        JLabel noteLabel = new JLabel("(Version for Customer)", SwingConstants.CENTER);
-        noteLabel.setFont(new Font("Arial", Font.BOLD, 12));
-        noteLabel.setForeground(Color.RED);
-        constraints.gridy = 1;
-        constraints.gridwidth = 2;
-        mainPanel.add(noteLabel, constraints);
-
+        contentPanel = new JPanel(new GridBagLayout());
+        
+        // List books button
         listBooksButton = new JButton("1. List all books");
         listBooksButton.addActionListener((ActionEvent e) -> {
-            // Handle list all books action
+            System.out.println("Hello1");
         });
-        listBooksButton.setPreferredSize(new Dimension(200, 50));
-        constraints.gridy = 2;
-        constraints.gridwidth = 1;
-        mainPanel.add(listBooksButton, constraints);
+        functionPanel.add(listBooksButton);
 
-        searchBookButton = new JButton("2. Search book");
+        // List customers button
+        searchBookButton = new JButton("2. Search Book");
         searchBookButton.addActionListener((ActionEvent e) -> {
-            // Handle search book action
+                contentPanel.removeAll();
+                
+                contentPanel.revalidate();
+                contentPanel.repaint();
         });
-        searchBookButton.setPreferredSize(new Dimension(200, 50));
-        constraints.gridx = 1;
-        mainPanel.add(searchBookButton, constraints);
+        functionPanel.add(searchBookButton);
 
         lendBookButton = new JButton("3. Lend book");
         lendBookButton.addActionListener((ActionEvent e) -> {
-            // Handle lend book action
-        });
-        lendBookButton.setPreferredSize(new Dimension(200, 50));
-        constraints.gridx = 0;
-        constraints.gridy = 3;
-        mainPanel.add(lendBookButton, constraints);
 
-        returnBookButton = new JButton("4. Return book");
+        });
+        functionPanel.add(lendBookButton);
+
+        returnBookButton = new JButton("4. Return Book");
         returnBookButton.addActionListener((ActionEvent e) -> {
-            // Handle return book action
+            System.out.println("Hello4");
         });
-        returnBookButton.setPreferredSize(new Dimension(200, 50));
-        constraints.gridx = 1;
-        mainPanel.add(returnBookButton, constraints);
+        functionPanel.add(returnBookButton);
 
-        listLendingBooksButton = new JButton("5. List lending books");
+        listLendingBooksButton = new JButton("5. List Lending Book");
         listLendingBooksButton.addActionListener((ActionEvent e) -> {
-            // Handle list lending books action
+            
         });
-        listLendingBooksButton.setPreferredSize(new Dimension(200, 50));
-        constraints.gridx = 0;
-        constraints.gridy = 4;
-        mainPanel.add(listLendingBooksButton, constraints);
+        functionPanel.add(listLendingBooksButton);
 
-        exitButton = new JButton("Exit");
-        exitButton.addActionListener((ActionEvent e) -> {
+        listLendingBooksButton = new JButton("6. Exit");
+        listLendingBooksButton.addActionListener((ActionEvent e) -> {
             MethodController.exit();
         });
-        exitButton.setPreferredSize(new Dimension(200, 50));
-        constraints.gridx = 1;
-        constraints.gridy = 4;
-        mainPanel.add(exitButton, constraints);
+        functionPanel.add(listLendingBooksButton);
+        
+        splitPane.setRightComponent(new JScrollPane(contentPanel)); // Sử dụng JScrollPane để cuộn nếu nội dung quá lớn
 
-        // Add version label
-        JLabel versionLabel = new JLabel("Version 1.0");
-        versionLabel.setFont(new Font("Arial", Font.PLAIN, 10));
-        versionLabel.setForeground(Color.GRAY);
-
-        JPanel versionPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        versionPanel.setBackground(Color.WHITE);
-        versionPanel.add(versionLabel);
-
-        constraints.gridx = 1;
-        constraints.gridy = 5; // Set the gridy value for the versionPanel
-        constraints.anchor = GridBagConstraints.SOUTHEAST;
-        mainPanel.add(versionPanel, constraints);
-
-        setContentPane(mainPanel);
-
+        setContentPane(splitPane);
         setResizable(false); // Lock user resizing
     }
 
-    
     public void run() {
         initializeUI();
         pack();
