@@ -10,14 +10,15 @@ public class CustomerController {
         "Search books",
         "Lend books",
         "Return books",
-        "List lending books"
+        "List lending books",
+        "Exit"     
         };
         Menu m = new Menu(tt, ls) {
             @Override
             public void execute(int n) {
                 switch (n) {
                     case 1:
-                        MethodController.listAllBooks();
+                        MethodController.listAllBooks("List of Books",ManagementLibrary.book);
                         break;
                     case 2:
                         MethodController.searchBooks();
@@ -29,10 +30,11 @@ public class CustomerController {
                         MethodController.returnBooks();
                         break;   
                     case 5:
+                        MethodController.listAllBooks("List lending Books",ManagementLibrary.bookBorrow);
                         break;
                     case 6:
-                        
-                        break;
+                        System.out.println("Bye!");
+                        System.exit(0);
                 }
             }
         };
