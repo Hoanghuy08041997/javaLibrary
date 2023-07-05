@@ -13,5 +13,6 @@ public class ManagementLibrary {
     public static ArrayList<Manager> manager = new ArrayList<>(); 
     public static ArrayList<Book> book = new ArrayList<>();
     public static ArrayList<BookBorrow> bookBorrow = new ArrayList<>();
+    //Kiểm tra tài khoản
     public static ArrayList<Customer> logged = new ArrayList<>();    
 }

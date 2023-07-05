@@ -1,6 +1,5 @@
 package Model;
 
-import Controller.ManagementLibrary;
 import java.time.LocalDate;
 
 public class Customer extends People {

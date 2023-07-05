@@ -74,7 +74,6 @@ public class Account {
     }   
     
     public static void returnAccount(Account s) {
-
         for (Customer c : ManagementLibrary.customer) {
             if (c.getName().equals(s.getUsername())) {
                 ManagementLibrary.logged.clear();

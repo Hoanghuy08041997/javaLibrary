@@ -91,9 +91,7 @@ public class LoginSwingUI extends JFrame {
 
 
         exitButton.addActionListener((ActionEvent e) -> {
-            IOReader.saveFileAccount(ManagementLibrary.account, "D:\\Java-PRO192\\ManagementLibrary\\src\\ListAccounts.txt");
-            IOReader.saveFileCustomer(ManagementLibrary.customer, "D:\\Java-PRO192\\ManagementLibrary\\src\\ListCustomer.txt");
-            System.exit(0);
+            MethodController.exit();
         });
     }
 

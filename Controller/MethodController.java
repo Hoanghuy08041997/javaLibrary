@@ -1,15 +1,11 @@
 package Controller;
 
-import static Controller.ManagementLibrary.account;
-import static Controller.ManagementLibrary.customer;
-import static Controller.ManagementLibrary.book;
-import static Controller.ManagementLibrary.bookBorrow;
+import static Controller.ManagementLibrary.*;
 import Model.Book;
 import Model.BookBorrow;
 import Model.Customer;
 import View.Menu;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -21,17 +17,22 @@ public class MethodController {
         account.addAll(IOReader.readFileAccount("./src/ListAccounts.txt"));
         customer.addAll(IOReader.readFileCustomer("./src/ListCustomer.txt"));
         book.addAll(IOReader.readFileBook("./src/ListBook.txt"));
+        bookBorrow.addAll(IOReader.readFileBookBorrow("./src/ListBookBorrow.txt"));
+        
 
     }
     
      public static void saveData(){
         IOReader.saveFileAccount(ManagementLibrary.account, "./src/ListAccounts.txt");
-        IOReader.saveFileCustomer(ManagementLibrary.customer, "./src/ListCustomer.txt");  
+        IOReader.saveFileCustomer(ManagementLibrary.customer, "./src/ListCustomer.txt"); 
+        IOReader.saveFileBookBorrow(ManagementLibrary.bookBorrow, "./src/ListBookBorrow.txt");
+        
     }
     
     public static void exit() {
         IOReader.saveFileAccount(ManagementLibrary.account, "./src/ListAccounts.txt");
         IOReader.saveFileCustomer(ManagementLibrary.customer, "./src/ListCustomer.txt");
+        IOReader.saveFileBookBorrow(ManagementLibrary.bookBorrow, "./src/ListBookBorrow.txt");
         System.exit(0);
     }
 
@@ -72,6 +73,18 @@ public class MethodController {
         return rs;
     }
 
+    //Search Book
+    public static List<Integer> searchBook(String searchCriteria, String s) {
+        List<Integer> matchingAccounts = new ArrayList<>();
+        SearchPredicate<Book> searchCriteriaByProperties = new SearchPredicate<>(searchCriteria, s);
+        for (Book b : ManagementLibrary.book) {
+            if (searchCriteriaByProperties.test(b)) {
+                matchingAccounts.add(b.getId());
+            }
+        }
+        return matchingAccounts;
+    }
+    
     public static void searchBooks() {
         String tt = "Search Book";
         String[] ms = {"Search by Id",
@@ -125,7 +138,7 @@ public class MethodController {
                         for (Book b : ManagementLibrary.book) {
                             if (b.getId() == id) {
                                 b.setNumber(b.getNumber() - 1);
-                                BookBorrow bb = new BookBorrow(b.getId(), b.getName(), b.getAuthor(), b.getNumber(),b.getPrice(), LoginController.Acc.getId(), LocalDate.now(),LocalDate.now().plusDays(7));
+                                BookBorrow bb = new BookBorrow(b.getId(), b.getName(), b.getAuthor(), b.getNumber(),b.getPrice(), LoginController.Acc.getId(), LocalDate.now(),false);
                                 ManagementLibrary.bookBorrow.add(bb);
                             }
                         }

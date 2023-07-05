@@ -15,11 +15,11 @@ public class ManagerMenuUI extends JFrame {
     private JButton searchCustomerButton;
     private JButton addAccountButton;
     private JButton removeAccountButton;
-    private JButton removeBookButton;
     private JButton exitButton;
 
     private final AccountManagementUI accountManagementUI;
     private final CreateAccountUI createAccountUI;
+    private final SearchCustomerUI searchCustomerUI;
 
     public ManagerMenuUI() {
         setTitle("Manager Menu");
@@ -28,6 +28,7 @@ public class ManagerMenuUI extends JFrame {
         run();
         accountManagementUI = new AccountManagementUI();
         createAccountUI = new CreateAccountUI();
+        searchCustomerUI = new SearchCustomerUI();
     }
 
     private void initializeUI() {
@@ -46,7 +47,10 @@ public class ManagerMenuUI extends JFrame {
         // Nút "List all books"
         listBooksButton = new JButton("1. List all books");
         listBooksButton.addActionListener((ActionEvent e) -> {
-            JOptionPane.showMessageDialog(this, "Coming soon...");
+            contentPanel.removeAll();
+            contentPanel.add(new BookListUI(ManagementLibrary.book));
+            contentPanel.revalidate();
+            contentPanel.repaint();
         });
         functionPanel.add(listBooksButton);
 
@@ -68,8 +72,11 @@ public class ManagerMenuUI extends JFrame {
 
         // Nút "Search customer"
         searchCustomerButton = new JButton("4. Search customer");
-        searchCustomerButton.addActionListener((ActionEvent e) -> {
-            JOptionPane.showMessageDialog(this, "Coming soon...");
+        searchCustomerButton.addActionListener((ActionEvent e) -> {          
+            contentPanel.removeAll();
+            contentPanel.add(searchCustomerUI);
+            contentPanel.revalidate();
+            contentPanel.repaint();
         });
         functionPanel.add(searchCustomerButton);
 
@@ -93,15 +100,8 @@ public class ManagerMenuUI extends JFrame {
         });
         functionPanel.add(removeAccountButton);
 
-        // Nút "Remove book"
-        removeBookButton = new JButton("7. Remove book");
-        removeBookButton.addActionListener((ActionEvent e) -> {
-            JOptionPane.showMessageDialog(this, "Coming soon...");
-        });
-        functionPanel.add(removeBookButton);
-
         // Nút "Exit"
-        exitButton = new JButton("8. Exit");
+        exitButton = new JButton("7. Exit");
         exitButton.addActionListener((ActionEvent e) -> {
             MethodController.exit();
         });
