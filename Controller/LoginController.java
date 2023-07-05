@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.Random;
 
 public class LoginController {
-    
+     public static Account Acc;
     public static void LoginVerify(){
         String [] options = {"Login Account","Create Account", "Exit"};
         Menu menu = new Menu("Welcome to Form Login Menu ",options) {
@@ -17,10 +17,12 @@ public class LoginController {
                     case 1:
                         String us = Validate.stringWithNumberUserInput("Username: ");
                         String pd = Validate.stringWithNumberUserInput("Password: ");  
-                        int level = Account.checkLevelAccount(new Account(us,pd));
+                        Acc=new Account(us,pd);
+                        int level = Account.checkAccount(Acc);
                         switch (level) {
                             case 1:
                                 System.out.println("WELCOME CUSTOMER");
+                                CustomerController.customerMenu();
                                 break;
                             case 2:
                                 System.out.println("\u001B[32m" + "WELCOME MANAGER" + "\u001B[0m");
@@ -67,8 +69,8 @@ public class LoginController {
 
                     case 3:
                     System.out.println("Goodbye");
-                    IOReader.saveFileAccount(ManagementLibrary.account,"D:\\Java-PRO192\\ManagementLibrary\\src\\ListAccounts.txt");  
-                    IOReader.saveFileCustomer(ManagementLibrary.customer,"D:\\Java-PRO192\\ManagementLibrary\\src\\ListCustomer.txt");
+                    IOReader.saveFileAccount(ManagementLibrary.account,"./src/ListAccounts.txt");  
+                    IOReader.saveFileCustomer(ManagementLibrary.customer,"./src/ListCustomer.txt");
                     System.exit(0);
                     break;
                 }
