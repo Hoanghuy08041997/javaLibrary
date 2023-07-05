@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.util.Random;
 
 public class LoginController {
-     public static Account Acc;
     public static void LoginVerify(){
         String [] options = {"Login Account","Create Account", "Exit"};
         Menu menu = new Menu("Welcome to Form Login Menu ",options) {
@@ -16,15 +15,18 @@ public class LoginController {
                 switch (i) {
                     case 1:
                         String us = Validate.stringWithNumberUserInput("Username: ");
-                        String pd = Validate.stringWithNumberUserInput("Password: ");  
-                        Acc=new Account(us,pd);
-                        int level = Account.checkLevelAccount(Acc);
+                        String pd = Validate.checkedPass("Password: ");  
+                        Account acc=new Account(us,pd);
+                        int level = Account.checkLevelAccount(acc);
                         switch (level) {
                             case 1:
+                                Account.returnAccount(acc);
+ 
                                 System.out.println("WELCOME CUSTOMER");
                                 CustomerController.customerMenu();
                                 break;
                             case 2:
+                                Account.returnAccount(acc);
                                 System.out.println("\u001B[32m" + "WELCOME MANAGER" + "\u001B[0m");
                                 ManagerController.managerMenu();
                                 break;
