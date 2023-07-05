@@ -172,27 +172,39 @@ public class MethodController {
         while (true) {
             id = Validate.intUserInput("Enter ID:");
             bl = searchForBook("Id", id);
-            if (bl.get(0).getNumber() == 0) {
-                System.out.println("Number of book is Zero");
-            } else {
-                listAllBooks("List Searched Book", bl);
+            if (!bl.isEmpty()) {
+                if (bl.get(0).getNumber() == 0) {
+                    System.out.println("Number of book is Zero");
 
-                if (!bl.isEmpty()) {
-
-                    System.out.println("Do you want to borrow?(y/n)");
-                    String yn = sc.next().toLowerCase().trim();
-                    if (yn.equals("y")) {
-                        for (Book b : ManagementLibrary.book) {
-                            if (b.getId() == id) {
-                                b.setNumber(b.getNumber() - 1);
-                                BookBorrow bb = new BookBorrow(b.getId(), b.getName(), b.getAuthor(), b.getNumber(),b.getPrice(), LoginController.Acc.getId(), LocalDate.now(),false);
-                                ManagementLibrary.bookBorrow.add(bb);
+                } else {
+                    for (BookBorrow bb : ManagementLibrary.bookBorrow) {
+                        if (bb.getIdCustomer() == ManagementLibrary.logged.get(0).getId()) 
+                            if (bb.getId() == bl.get(0).getId()){ 
+                                System.out.println("You have borrowed this book!");
+                                check = false;
+                                break;
                             }
-                        }
-                        System.out.println("Borrow successfully");
-                    }
-                }
+                        
 
+                    }
+                    if (check==true) {
+                        System.out.println("Do you want to borrow?(y/n)");
+                        String yn = sc.next().toLowerCase().trim();
+                        if (yn.equals("y")) {
+                            for (Book b : ManagementLibrary.book) {
+                                if (b.getId() == id) {
+                                    b.setNumber(b.getNumber() - 1);
+                                    System.out.println(b.toString());
+                                    BookBorrow bb = new BookBorrow(b.getId(), b.getName(), b.getAuthor(), b.getNumber(),b.getPrice(), ManagementLibrary.logged.get(0).getId(), LocalDate.now(),false);
+
+                                    ManagementLibrary.bookBorrow.add(bb);
+                                }
+                            }
+                            System.out.println("Borrow successfully");
+                        }
+                    }
+
+                }
             }
             System.out.println("Do you want to continue(y/n)");
             String yn = sc.next().toLowerCase().trim();
@@ -201,7 +213,7 @@ public class MethodController {
             }
         }
     }
-
+    
     public static void returnBooks() {
         Scanner sc = new Scanner(System.in);
         while (true) {
@@ -224,7 +236,7 @@ public class MethodController {
                     if (yn.equals("y")) {
                         for (BookBorrow bb : ManagementLibrary.bookBorrow) {
                             if ((bb.getIdCustomer() == ManagementLibrary.logged.get(0).getId()) && (bb.getId() == id)) {
-                                if(LocalDate.now().isAfter(bb.getDateBorrow())) System.out.println("You have returned book over deadline!");
+                                if (LocalDate.now().isAfter(bb.getDateBorrow().plusDays(7))) System.out.println("You have returned book over deadline!");
                                 ManagementLibrary.bookBorrow.remove(bb);
                                 break;
                             }
