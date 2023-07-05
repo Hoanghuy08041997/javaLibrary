@@ -2,6 +2,7 @@ package View;
 
 import Controller.ManagementLibrary;
 import Model.Customer;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,7 +15,7 @@ public class LoginInfoUI extends JFrame {
     public LoginInfoUI() {
         setTitle("Login Information");
         setSize(400, 200);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
         JPanel mainPanel = new JPanel();
@@ -25,8 +26,8 @@ public class LoginInfoUI extends JFrame {
 
         usernameLabel = new JLabel("Logged in as: " + ManagementLibrary.logged.get(0).getName());
         infoPanel.add(usernameLabel);
-        
-        showInfo = new JButton("Show info");
+
+        showInfo = new JButton("Show Info");
         infoPanel.add(showInfo);
 
         logoutButton = new JButton("Logout");
@@ -42,8 +43,8 @@ public class LoginInfoUI extends JFrame {
                 info.append("Your id: ").append(account.getId()).append("\n");
                 info.append("Username: ").append(account.getName()).append("\n");
                 info.append("Email: ").append(account.getEmail()).append("\n");
-                info.append("Phone").append(account.getPhone()).append("\n");
-                info.append("Birth").append(account.getBirthday()).append("\n");
+                info.append("Phone: ").append(account.getPhone()).append("\n");
+                info.append("Birth: ").append(account.getBirthday()).append("\n");
                 info.append("\n");
             }
             JTextArea textArea = new JTextArea(info.toString());
@@ -63,10 +64,15 @@ public class LoginInfoUI extends JFrame {
             panel.add(scrollPane, BorderLayout.CENTER);
             panel.add(closeButton, BorderLayout.SOUTH);
 
-            JOptionPane.showMessageDialog(this, panel, "Logged Information", JOptionPane.INFORMATION_MESSAGE);
+            JDialog dialog = new JDialog(LoginInfoUI.this, "Logged Information", true);
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            dialog.getContentPane().add(panel);
+            dialog.pack();
+            dialog.setLocationRelativeTo(LoginInfoUI.this);
+            dialog.setVisible(true);
         });
 
-          
+
         logoutButton.addActionListener((ActionEvent e) -> {
             // Đóng tất cả các cửa sổ đằng sau
             Window[] windows = Window.getWindows();

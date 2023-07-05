@@ -110,7 +110,7 @@ public class AccountManagementUI extends JPanel {
         accountTable.setModel(tableModel);
     }
 
-    // Method to remove selected account
+// Method to remove selected account
     private void removeAccount(int idCustomer) {
         // Hiển thị hộp thoại xác nhận
         int confirmed = JOptionPane.showConfirmDialog(
@@ -120,21 +120,33 @@ public class AccountManagementUI extends JPanel {
                 JOptionPane.YES_NO_OPTION
         );
 
-        // Kiểm tra xác nhận từ người dùng
         if (confirmed == JOptionPane.YES_OPTION) {
-            // Tìm và xóa tài khoản trong ManagementLibrary.account
+            boolean foundAndDeleted = false;
+
             for (int i = 0; i < ManagementLibrary.account.size(); i++) {
                 if (ManagementLibrary.account.get(i).getId() == idCustomer) {
-                    ManagementLibrary.account.remove(i);
-                    break;
+                    if (ManagementLibrary.account.get(i).getLevel() > ManagementLibrary.logged.get(0).getLevelUser()) {
+                        JOptionPane.showMessageDialog(null, "You cannot remove an account that has a higher level or higher.");
+                        foundAndDeleted = true;
+                        break;
+                    } else if (ManagementLibrary.account.get(i).getLevel() == ManagementLibrary.logged.get(0).getLevelUser()) {
+                        JOptionPane.showMessageDialog(null, "You cannot remove an account that has the same level or higher.");
+                        foundAndDeleted = true;
+                        break;
+                    } else {
+                        ManagementLibrary.account.remove(i);
+                        break;
+                    }
                 }
             }
 
-            // Tìm và xóa tài khoản trong ManagementLibrary.customer
-            for (int i = 0; i < ManagementLibrary.customer.size(); i++) {
-                if (ManagementLibrary.customer.get(i).getId() == idCustomer) {
-                    ManagementLibrary.customer.remove(i);
-                    break;
+            if (!foundAndDeleted) {
+                // Tìm và kiểm tra khách hàng trong ManagementLibrary.customer
+                for (int i = 0; i < ManagementLibrary.customer.size(); i++) {
+                    if (ManagementLibrary.customer.get(i).getId() == idCustomer && ManagementLibrary.customer.get(i).getLevelUser() < ManagementLibrary.logged.get(0).getLevelUser()) {
+                        ManagementLibrary.customer.remove(i);
+                        break;
+                    }
                 }
             }
         }
