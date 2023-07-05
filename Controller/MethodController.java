@@ -164,6 +164,7 @@ public class MethodController {
                     if (yn.equals("y")) {
                         for (BookBorrow bb : ManagementLibrary.bookBorrow) {
                             if ((bb.getIdCustomer() == LoginController.Acc.getId()) && (bb.getId() == id)) {
+                                if(LocalDate.now().isAfter(bb.getDateBorrow())) System.out.println("You have returned book over deadline!");
                                 ManagementLibrary.bookBorrow.remove(bb);
                                 break;
                             }
