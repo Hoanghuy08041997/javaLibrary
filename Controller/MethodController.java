@@ -26,6 +26,7 @@ public class MethodController {
         IOReader.saveFileAccount(ManagementLibrary.account, "./src/ListAccounts.txt");
         IOReader.saveFileCustomer(ManagementLibrary.customer, "./src/ListCustomer.txt"); 
         IOReader.saveFileBookBorrow(ManagementLibrary.bookBorrow, "./src/ListBookBorrow.txt");
+        IOReader.saveFileBook(ManagementLibrary.book, "./src/ListBook.txt");
         
     }
     
@@ -33,6 +34,7 @@ public class MethodController {
         IOReader.saveFileAccount(ManagementLibrary.account, "./src/ListAccounts.txt");
         IOReader.saveFileCustomer(ManagementLibrary.customer, "./src/ListCustomer.txt");
         IOReader.saveFileBookBorrow(ManagementLibrary.bookBorrow, "./src/ListBookBorrow.txt");
+        IOReader.saveFileBook(ManagementLibrary.book, "./src/ListBook.txt");
         System.exit(0);
     }
 
