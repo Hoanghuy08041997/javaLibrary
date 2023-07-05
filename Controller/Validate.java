@@ -229,6 +229,22 @@ public class Validate {
         }
         return string;
     }
+    public static String checkedPass(String msg){
+         if (!msg.isEmpty()) System.out.println("\u001B[34m" + msg + "\u001B[0m");
+        Scanner input = new Scanner(System.in);
+        boolean valid = false;
+        String string = "";
+        while (!valid) {
+            String temple = input.nextLine();
+            if (temple.length() >= 8 && temple.matches("^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=]).*$")) {
+                string = temple.trim();
+                valid = true;
+            } else {
+                System.out.println("\u001B[31m" + "Password must be at least 8 characters long and contain at least one digit, one letter, and one special character." + "\u001B[0m");
+            }
+        }
+        return string;
+    }
     public static String nameUserInput(String msg) {
         if (!msg.isEmpty()) System.out.println(msg);
         Scanner input = new Scanner(System.in);
