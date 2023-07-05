@@ -1,5 +1,6 @@
 package View;
 
+import Controller.ManagementLibrary;
 import Controller.MethodController;
 import javax.swing.*;
 import java.awt.*;
@@ -15,11 +16,13 @@ public final class CustomerMenuUI extends JFrame {
     private JButton returnBookButton;
     private JButton listLendingBooksButton;
     private JButton exitButton;
+    private LoginInfoUI loginInfoUI;
 
     public CustomerMenuUI() {
         setTitle("Customer Menu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(1000, 750));
+        loginInfoUI = new LoginInfoUI();
         initializeUI();
         pack();
         setLocationRelativeTo(null);
@@ -29,14 +32,35 @@ public final class CustomerMenuUI extends JFrame {
     private void initializeUI() {
         JPanel mainPanel = new JPanel(new BorderLayout());
 
-        // Create the loginInfoPanel and set it at the NORTH position of mainPanel
         JPanel loginInfoPanel = new JPanel();
         loginInfoPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
         JButton loginInfoButton = new JButton("Your Account");
         loginInfoButton.addActionListener((ActionEvent e) -> {
-            LoginInfoUI loginInfoUI = new LoginInfoUI();
-            loginInfoUI.setVisible(true);
+            JPopupMenu popupMenu = new JPopupMenu();
+            
+            JMenuItem showNameAccount = new JMenuItem("Login as: " + ManagementLibrary.logged.get(0).getName());
+            showNameAccount.setEnabled(false);
+            showNameAccount.addActionListener((ActionEvent event) -> {
+            });
+            popupMenu.add(showNameAccount);
+
+            // Sự lựa chọn "Show info"
+            JMenuItem showInfoItem = new JMenuItem("Show info");
+            showInfoItem.addActionListener((ActionEvent event) -> {          
+                loginInfoUI.showInfo();
+            });
+            popupMenu.add(showInfoItem);
+
+            // Sự lựa chọn "Log out"
+            JMenuItem logoutItem = new JMenuItem("Log out");
+            logoutItem.addActionListener((ActionEvent event) -> {
+                loginInfoUI.logout();
+                JOptionPane.showMessageDialog(this, "Logged out successfully!");
+            });
+            popupMenu.add(logoutItem);
+
+            popupMenu.show(loginInfoButton, 0, loginInfoButton.getHeight());
         });
 
         // Add the loginInfoButton to the panel
@@ -100,6 +124,16 @@ public final class CustomerMenuUI extends JFrame {
 
         splitPane.setRightComponent(new JScrollPane(contentPanel));
 
+        // Create a new JPanel for the version label
+        JPanel versionPanel = new JPanel();
+        versionPanel.setLayout(new BorderLayout());
+
+        JLabel versionLabel = new JLabel("Version 1.0 ");
+        versionLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        versionLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        versionPanel.add(versionLabel, BorderLayout.EAST);
+
+        mainPanel.add(versionPanel, BorderLayout.SOUTH);
         // Add the splitPane to the center of the mainPanel
         mainPanel.add(splitPane, BorderLayout.CENTER);
 

@@ -24,8 +24,6 @@ public class BookBorrow extends Book {
         this.dateBorrow = dateBorrow;
     }
 
-    
-
     public int getIdCustomer() {
         return idCustomer;
     }

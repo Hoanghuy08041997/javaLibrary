@@ -1,7 +1,6 @@
 package View;
 
-import Controller.ManagementLibrary;
-import Controller.MethodController;
+import Controller.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -32,7 +31,7 @@ public class ManagerMenuUI extends JFrame {
     }
 
     private void initializeUI() {
-        // Create the mainPanel with BorderLayout
+        // Tạo mainPanel với BorderLayout
         JPanel mainPanel = new JPanel(new BorderLayout());
 
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
@@ -44,14 +43,14 @@ public class ManagerMenuUI extends JFrame {
 
         contentPanel = new JPanel(new GridBagLayout());
 
-        // List books button
+        // Nút "List all books"
         listBooksButton = new JButton("1. List all books");
         listBooksButton.addActionListener((ActionEvent e) -> {
             JOptionPane.showMessageDialog(this, "Coming soon...");
         });
         functionPanel.add(listBooksButton);
 
-        // List customers button
+        // Nút "List all customers"
         listCustomersButton = new JButton("2. List all customers");
         listCustomersButton.addActionListener((ActionEvent e) -> {
             contentPanel.removeAll();
@@ -67,14 +66,14 @@ public class ManagerMenuUI extends JFrame {
         });
         functionPanel.add(searchBookButton);
 
-        // Search customer button
+        // Nút "Search customer"
         searchCustomerButton = new JButton("4. Search customer");
         searchCustomerButton.addActionListener((ActionEvent e) -> {
             JOptionPane.showMessageDialog(this, "Coming soon...");
         });
         functionPanel.add(searchCustomerButton);
 
-        // Add account button
+        // Nút "Add account"
         addAccountButton = new JButton("5. Add account");
         addAccountButton.addActionListener((ActionEvent e) -> {
             contentPanel.removeAll();
@@ -84,7 +83,7 @@ public class ManagerMenuUI extends JFrame {
         });
         functionPanel.add(addAccountButton);
 
-        // Remove account button
+        // Nút "Remove account"
         removeAccountButton = new JButton("6. Remove account");
         removeAccountButton.addActionListener((ActionEvent e) -> {
             contentPanel.removeAll();
@@ -94,14 +93,14 @@ public class ManagerMenuUI extends JFrame {
         });
         functionPanel.add(removeAccountButton);
 
-        // Remove book button
+        // Nút "Remove book"
         removeBookButton = new JButton("7. Remove book");
         removeBookButton.addActionListener((ActionEvent e) -> {
             JOptionPane.showMessageDialog(this, "Coming soon...");
         });
         functionPanel.add(removeBookButton);
 
-        // Exit button
+        // Nút "Exit"
         exitButton = new JButton("8. Exit");
         exitButton.addActionListener((ActionEvent e) -> {
             MethodController.exit();
@@ -110,33 +109,52 @@ public class ManagerMenuUI extends JFrame {
 
         splitPane.setRightComponent(new JScrollPane(contentPanel));
 
-        // Create a new JPanel for the login info button
+        //Box Jpop
         JPanel loginInfoPanel = new JPanel();
         loginInfoPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
         JButton loginInfoButton = new JButton("Your Account");
         loginInfoButton.addActionListener((ActionEvent e) -> {
-        LoginInfoUI loginInfoUI = new LoginInfoUI();
-        loginInfoUI.setVisible(true);
+            JPopupMenu popupMenu = new JPopupMenu();
+            
+            JMenuItem showNameAccount = new JMenuItem("Login as: " + ManagementLibrary.logged.get(0).getName());
+            showNameAccount.setEnabled(false);
+            showNameAccount.addActionListener((ActionEvent event) -> {
+            });
+            popupMenu.add(showNameAccount);
+
+            // Sự lựa chọn "Show info"
+            JMenuItem showInfoItem = new JMenuItem("Show info");
+            showInfoItem.addActionListener((ActionEvent event) -> {
+                LoginInfoUI loginInfoUI = new LoginInfoUI();
+                loginInfoUI.showInfo();
+            });
+            popupMenu.add(showInfoItem);
+
+            // Sự lựa chọn "Log out"
+            JMenuItem logoutItem = new JMenuItem("Log out");
+            logoutItem.addActionListener((ActionEvent event) -> {
+                LoginInfoUI loginInfoUI = new LoginInfoUI();
+                loginInfoUI.logout();
+                JOptionPane.showMessageDialog(this, "Logged out successfully!");
+            });
+            popupMenu.add(logoutItem);
+
+            popupMenu.show(loginInfoButton, 0, loginInfoButton.getHeight());
         });
+        loginInfoPanel.add(loginInfoButton);
 
-            // Add the login info button to the panel
-            loginInfoPanel.add(loginInfoButton);
+        mainPanel.add(splitPane, BorderLayout.CENTER);
+        mainPanel.add(loginInfoPanel, BorderLayout.NORTH);
 
-            // Add the splitPane to the center of the mainPanel
-            mainPanel.add(splitPane, BorderLayout.CENTER);
+        setContentPane(mainPanel);
+        pack();
+        setLocationRelativeTo(null);
+        setResizable(false);
+    }
 
-            // Add the loginInfoPanel to the north of the mainPanel
-            mainPanel.add(loginInfoPanel, BorderLayout.NORTH);
-
-            setContentPane(mainPanel);
-            setResizable(false);
-        }
-
-        public final void run() {
-            initializeUI();
-            pack();
-            setLocationRelativeTo(null);
-            setVisible(true);
-        }
+    public final void run() {
+        initializeUI();
+        setVisible(true);
+    }
 }

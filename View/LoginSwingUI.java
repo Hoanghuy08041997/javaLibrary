@@ -103,7 +103,5 @@ public class LoginSwingUI extends JFrame {
             LoginSwingUI loginSwingUI = new LoginSwingUI();
             loginSwingUI.setVisible(true);
         });
-    }
-    
-    
+    }    
 }
