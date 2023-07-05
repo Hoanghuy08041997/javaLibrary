@@ -1,33 +1,45 @@
 package Model;
 
+import java.time.LocalDate;
+
 public class BookBorrow extends Book {
-    protected int idBook;
     protected int idCustomer;
-    protected int dateBorrow;
-        
-    public int getIdBook() {
-        return idBook;
+    protected LocalDate dateBorrow;
+    protected LocalDate dateReturn;
+
+    public BookBorrow( int id, String name, String author, int number,int price,int idCustomer, LocalDate dateBorrow, LocalDate dateReturn) {
+        super(id, name, author, number, price);
+        this.idCustomer = idCustomer;
+        this.dateBorrow = dateBorrow;
+        this.dateReturn = dateReturn;
     }
 
-    public int getIdCustomer() {
-        return idCustomer;
-    }
+   
 
-    public int getDateBorrow() {
+    public LocalDate getDateBorrow() {
         return dateBorrow;
     }
 
-    public void setIdBook(int idBook) {
-        this.idBook = idBook;
+    public void setDateBorrow(LocalDate dateBorrow) {
+        this.dateBorrow = dateBorrow;
+    }
+
+    
+
+    public int getIdCustomer() {
+        return idCustomer;
     }
 
     public void setIdCustomer(int idCustomer) {
         this.idCustomer = idCustomer;
     }
 
-    public void setDateBorrow(int dateBorrow) {
-        this.dateBorrow = dateBorrow;
+    @Override
+    public String toString() {
+        String print=String.format("%-7s%-30s%-20s%-30s%-30s%-30s","id=" + id , "name=" + name , "authoir=" + author ,"price=" + price,"dateBorrow"+dateBorrow,"dateReturn"+dateReturn);
+        return print;
     }
-    //
+
+   
     
 }
