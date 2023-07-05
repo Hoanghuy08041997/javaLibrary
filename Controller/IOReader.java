@@ -158,7 +158,21 @@ public class IOReader {
         }
         return bookList;
     }
-    
+    public static boolean saveFileBook(ArrayList<Book> stdList, String path) {
+        try {
+            try (FileOutputStream fos = new FileOutputStream(path); OutputStreamWriter osw = new OutputStreamWriter(fos); BufferedWriter bw = new BufferedWriter(osw)) {
+                for (Book t : stdList) {
+                    String line = t.getId() + "," + t.getName() + "," + t.getAuthor() + "," + t.getType() + "," + t.getNumber() + "," + t.getPrice();
+                    bw.write(line);
+                    bw.newLine();
+                }
+            }
+            return true;
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return false;
+    }
     //IO BorrowBook
     public static boolean saveFileBookBorrow(ArrayList<BookBorrow> stdList, String path) {
         try {
