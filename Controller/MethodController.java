@@ -84,12 +84,12 @@ public class MethodController {
         }
         return matchingAccounts;
     }
-    
-    public static void searchBooks() {
+     public static void searchBooks() {
         String tt = "Search Book";
         String[] ms = {"Search by Id",
             "Search by Name",
             "Search by Author",
+            "Search by Type",
             "Exit"};
         Menu m = new Menu(tt, ms) {
             @Override
@@ -112,12 +112,59 @@ public class MethodController {
                         bl = searchForBook("Author", author);
                         listAllBooks("List Searched Book", bl);
                         break;
+                    case 4:
+                        String type = chooseType();
+                        bl = searchForBook("Type", type);
+                        listAllBooks("List Searched Book", bl);
+                        break;
                 }
             }
         };
         m.run();
     }
 
+    public static String chooseType() {
+        String tt = "Type Menu";
+        String[] ls = {
+            "Science",
+            "Comic",
+            "Manga",
+            "Novel",
+            "Fiction",
+            "Dictionary"
+        };
+        String type = null;
+        Menu m = new Menu(tt, ls) {
+            @Override
+            public void execute(int n) {
+            }
+        };
+        int k = m.getSelected();
+        switch (k) {
+            case 1:
+                type = "Science";
+                break;
+            case 2:
+                type = "Comic";
+                break;
+            case 3:
+                type = "Manga";
+                break;
+            case 4:
+                type = "Novel";
+                break;
+            case 5:
+                type = "Fiction";
+                break;
+            case 6:
+                type = "Dictionary";
+                break;
+
+        }
+        return type;
+    }
+
+    
     public static void lendBooks() {
         Scanner sc = new Scanner(System.in);
         List<Book> bl = new ArrayList<Book>();
@@ -164,7 +211,7 @@ public class MethodController {
                 System.out.println("You do not borrow any book");
             } else {
                 for (BookBorrow bb : ManagementLibrary.bookBorrow) {
-                    if ((bb.getIdCustomer() == LoginController.Acc.getId()) && (bb.getId() == id)) {
+                    if ((bb.getIdCustomer() == ManagementLibrary.logged.get(0).getId()) && (bb.getId() == id)) {
                         System.out.println(bb.toString());
                         count++;
                     }
@@ -176,7 +223,7 @@ public class MethodController {
                     String yn = sc.next().toLowerCase().trim();
                     if (yn.equals("y")) {
                         for (BookBorrow bb : ManagementLibrary.bookBorrow) {
-                            if ((bb.getIdCustomer() == LoginController.Acc.getId()) && (bb.getId() == id)) {
+                            if ((bb.getIdCustomer() == ManagementLibrary.logged.get(0).getId()) && (bb.getId() == id)) {
                                 if(LocalDate.now().isAfter(bb.getDateBorrow())) System.out.println("You have returned book over deadline!");
                                 ManagementLibrary.bookBorrow.remove(bb);
                                 break;
@@ -199,6 +246,20 @@ public class MethodController {
                 break;
             }
         }
+    }
+     public static void listLendingBook() {
+        String ms = "List lending books";
+        int count = 0;
+        System.out.println("------" + ms + "------");
+        for (BookBorrow bb : ManagementLibrary.bookBorrow) {
+            if (bb.getIdCustomer() == ManagementLibrary.logged.get(0).getId()) {
+                System.out.println(bb.toString());
+                count++;
+            }
+        }
+        System.out.println("----------------------");
+        System.out.println("Total : " + count + " Books");
+        //
     }
     //
 }
