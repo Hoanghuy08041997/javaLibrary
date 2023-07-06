@@ -1,36 +1,20 @@
 package View;
 
-import Controller.ManagementLibrary;
-import Controller.MethodController;
-import Model.Book;
-import Model.BookBorrow;
-import java.awt.BorderLayout;
-
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.Window;
+import Controller.*;
+import Model.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+
 
 public class SearchBookUI extends JPanel {
     private final JTextField searchField;
     private final JComboBox<String> searchProperties;
-    private final JTable bookTable;
+    private JTable bookTable;
     private JPanel bookDetailsPanel;
     private JPanel bookDetailsPanelForManager;
     private JPanel createBookDetailsPanel;
@@ -61,6 +45,7 @@ public class SearchBookUI extends JPanel {
 
         // Search button
         JButton searchButton = new JButton("Search");
+        searchButton.setToolTipText("Search for properties you want");
         searchButton.addActionListener((ActionEvent e) -> {
             String searchCriteria = searchField.getText();
             String selectedProperty = (String) searchProperties.getSelectedItem();
@@ -86,21 +71,44 @@ public class SearchBookUI extends JPanel {
 
         // Select button
         JButton selectButton = new JButton("Select");
-        
+        selectButton.setToolTipText("Choose the book to do something");
         selectButton.addActionListener((ActionEvent e) -> {
             int selectedRow = bookTable.getSelectedRow();
             if (selectedRow != -1) {                
                 int bookId = (int) bookTable.getValueAt(selectedRow, 0);
-                showBookDetails(bookId,IdCustomer);
+                showBookDetails(bookId, IdCustomer);
             }
         });
         constraints.gridx = 0;
         constraints.gridy = 2;
-        constraints.weightx = 1.0;
+        constraints.weightx = 0.5;
         constraints.weighty = 0.1;
-        constraints.gridwidth = 3;
+        constraints.gridwidth = 2; 
         constraints.insets = new Insets(5, 5, 5, 5);
         add(selectButton, constraints);
+
+        // Add book button
+        JButton addButton = new JButton("Add Book");
+        
+        if (ManagementLibrary.logged.get(0).getLevelUser() == 2) {
+            addButton.setEnabled(true);
+            addButton.setToolTipText("Create new book");
+        } else {
+            addButton.setEnabled(false);
+            addButton.setToolTipText("You don't have permission");
+        }
+
+        addButton.addActionListener(((ActionEvent e) -> {
+            
+        }));
+
+        constraints.gridx = 2; 
+        constraints.gridy = 2;
+        constraints.weightx = 0.5;
+        constraints.weighty = 0.1;
+        constraints.gridwidth = 1; 
+        constraints.insets = new Insets(5, 5, 5, 5);
+        add(addButton, constraints);
         
         scrollPane.setPreferredSize(new Dimension(800, 450));
         
@@ -164,11 +172,10 @@ public class SearchBookUI extends JPanel {
                 }
             }
 
-            if (b1 != null) { // Kiểm tra xem b1 có khác null hay không
+            if (b1 != null && MethodController.remainingBookToBorrow("id", Integer.toString(bookId)) > 0) { // Kiểm tra xem b1 có khác null hay không
                 if (ManagementLibrary.logged.get(0).getLevelUser() == 1) idCustomer = ManagementLibrary.logged.get(0).getId();
                 ManagementLibrary.bookBorrow.add(new BookBorrow(bookId, b1.getName(), b1.getAuthor(),b1.getType(), b1.getNumber(), b1.getPrice(), idCustomer, LocalDate.now(),false));
-                JOptionPane.showMessageDialog(this, "Lending successful."); // Hiển thị thông báo mượn thành công
-                ((Window) SwingUtilities.getRoot(this)).dispose();
+                JOptionPane.showMessageDialog(this, "Lending successful.");
             } else {
                 JOptionPane.showMessageDialog(this, "Failed to lend this book.");
             }
@@ -176,55 +183,78 @@ public class SearchBookUI extends JPanel {
     }     
     public void returnBook(int bookId, int idCustomer) {
         int confirmed = JOptionPane.showConfirmDialog(
-            this,
-            "Are you want to return this book?",
-            "Are you confirm?",
+            null,
+            "Are you sure you want to return this book?",
+            "Confirmation",
             JOptionPane.YES_NO_OPTION
         );
 
         if (confirmed == JOptionPane.YES_OPTION) {
-            int location = 0;
-            if (ManagementLibrary.logged.get(0).getLevelUser() == 1) idCustomer = ManagementLibrary.logged.get(0).getId();
-            for (int i = 0; i < ManagementLibrary.bookBorrow.size();i++){
+            int location = -1;
+            if (ManagementLibrary.logged.get(0).getLevelUser() == 1) {
+                idCustomer = ManagementLibrary.logged.get(0).getId();
+            }
+
+            for (int i = 0; i < ManagementLibrary.bookBorrow.size(); i++) {
                 if (ManagementLibrary.bookBorrow.get(i).getId() == bookId && ManagementLibrary.bookBorrow.get(i).getIdCustomer() == idCustomer) {
                     location = i;
                     break;
                 }
             }
 
-            if (location != 0) { 
+            if (location != -1) { 
                 ManagementLibrary.bookBorrow.remove(location);
-                JOptionPane.showMessageDialog(this, "Return successful."); // Hiển thị thông báo mượn thành công
-                ((Window) SwingUtilities.getRoot(this)).dispose();
+                JOptionPane.showMessageDialog(null, "Return successful.");
             } else {
-                JOptionPane.showMessageDialog(this, "You don't lend this book.");
+                JOptionPane.showMessageDialog(null, "You didn't borrow this book.");
             }
         }
-    }  
+    }
+  
     
     //Method about Book
-    public void editBook(int bookId,Book b){
+    public void addBook(Book b){
         int confirmed = JOptionPane.showConfirmDialog(
             this,
-            "Are you want to delete this book?",
+            "Are you want to add this book?",
             "Are you confirm?",
             JOptionPane.YES_NO_OPTION
         );
 
         if (confirmed == JOptionPane.YES_OPTION) {
-            int location = 0;
-            for (Book be : ManagementLibrary.book){
-                if (be.getId() == bookId){
-                    location = be.getId();               
+            if (b != null){
+                ManagementLibrary.book.add(b);
+                JOptionPane.showMessageDialog(this, "<html><font color='green'>✔</font> Successfully updated this book</html>");
+            } else JOptionPane.showMessageDialog(this, "<html><font color='red'>❌</font> Failed to add this book. Please check again infomation book. </html>");     
+        }
+    }
+    public boolean editBook(int bookId, Book b) {
+        int confirmed = JOptionPane.showConfirmDialog(
+            this,
+            "Are you want to save this book?",
+            "Are you confirm?",
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirmed == JOptionPane.YES_OPTION) {
+            int location = -1;
+            for (int i = 0; i < ManagementLibrary.book.size(); i++) {
+                Book be = ManagementLibrary.book.get(i);
+                if (be.getId() == bookId) {
+                    location = i;
                     break;
-                }                  
+                }
             }
-            
-            if (location != 0){
+
+            if (location != -1 && b != null) {
                 ManagementLibrary.book.set(location, b);
                 JOptionPane.showMessageDialog(this, "<html><font color='green'>✔</font> Successfully updated this book</html>");
-            } else JOptionPane.showMessageDialog(this, "<html><font color='red'>❌</font> Failed to update</html>");
+            } else {
+                JOptionPane.showMessageDialog(this, "<html><font color='red'>❌</font> Failed to update</html>");
+            }
+            return true;
         }
+        return false;
     }
     public void deleteBook(int bookId){
         int confirmed = JOptionPane.showConfirmDialog(
@@ -259,12 +289,12 @@ public class SearchBookUI extends JPanel {
         bookPanel.setLayout(new BorderLayout());
 
         // Tạo bảng dữ liệu Excel cho thông tin sách
-        String[] columnNames = {"ID", "Name", "Author", "Type", "Total Book", "Price"};
+        String[] columnNames = {"ID", "Name", "Author", "Type", "Remaining", "Price"};
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 
         for (Book book : ManagementLibrary.book) {
             if (book.getId() == idBook) {
-                Object[] rowData = {book.getId(), book.getName(), book.getAuthor(), book.getType(), book.getNumber(), book.getPrice()};
+                Object[] rowData = {book.getId(), book.getName(), book.getAuthor(), book.getType(), MethodController.remainingBookToBorrow("id", Integer.toString(idBook)), book.getPrice()};
                 tableModel.addRow(rowData);
             }
         }
@@ -337,8 +367,7 @@ public class SearchBookUI extends JPanel {
     }
     private JPanel createEditableBookDetailsPanel(int idBook) {
         JPanel bookPanel = new JPanel();
-        bookPanel.setLayout(new BorderLayout());
-
+        bookPanel.setLayout(new BorderLayout());        
         // Tạo bảng dữ liệu Excel cho thông tin sách
         String[] columnNames = {"ID", "Name", "Author", "Type", "Total Book", "Price"};
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
@@ -357,25 +386,28 @@ public class SearchBookUI extends JPanel {
         bookPanel.add(scrollPane, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel(new FlowLayout());
-
+        
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener((ActionEvent e) -> {
             // Lấy các giá trị từ bảng và cập nhật cho đối tượng sách tương ứng
             int selectedRow = bookTable.getSelectedRow();
             if (selectedRow != -1) {
-                int bookId = (int) bookTable.getValueAt(selectedRow, 0);
-                String name = (String) bookTable.getValueAt(selectedRow, 1);
-                String author = (String) bookTable.getValueAt(selectedRow, 2);
-                String type = (String) bookTable.getValueAt(selectedRow, 3);
-                int totalBook = (int) bookTable.getValueAt(selectedRow, 4);
-                double price = (double) bookTable.getValueAt(selectedRow, 5);               
-            }
+                
+                Object id = bookTable.getValueAt(selectedRow, 0);
+                int bookId = Integer.parseInt(id.toString());
+                String name = bookTable.getValueAt(selectedRow, 1).toString();
+                String author = bookTable.getValueAt(selectedRow, 2).toString();
+                String type = bookTable.getValueAt(selectedRow, 3).toString();
+                int totalBook = Integer.parseInt(bookTable.getValueAt(selectedRow, 4).toString());
+                int price = Integer.parseInt(bookTable.getValueAt(selectedRow, 5).toString());
+                Book b = new Book(bookId, name, author, type, totalBook, price); 
+                editBook(bookId, b);
+            }                       
         });
         buttonPanel.add(saveButton);
 
         // Thêm panel chứa nút vào bookPanel
         bookPanel.add(buttonPanel, BorderLayout.SOUTH);
-
         return bookPanel;
     }
     
@@ -391,11 +423,13 @@ public class SearchBookUI extends JPanel {
         } else dialog.getContentPane().add(bookDetailsPanelForManager);       
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
+        dialog.dispose();
+        
     }   
     private void showTableToEdit(int idBook) {
         createBookDetailsPanel = createEditableBookDetailsPanel(idBook);
         JDialog dialog = new JDialog();
-        dialog.setModal(true); 
+        dialog.setModal(true);
         dialog.setSize(800, 400);
         dialog.getContentPane().add(createBookDetailsPanel);
         dialog.setLocationRelativeTo(null);

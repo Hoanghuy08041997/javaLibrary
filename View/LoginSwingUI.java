@@ -1,7 +1,5 @@
 package View;
 
-import Controller.IOReader;
-import Controller.ManagementLibrary;
 import Controller.MethodController;
 import Controller.ValidateForSwing;
 import Model.Account;
@@ -18,7 +16,7 @@ public class LoginSwingUI extends JFrame {
 
     public LoginSwingUI() {
         
-        setTitle("Form Login Menu");
+        setTitle("Login");
         setSize(400, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -48,10 +46,7 @@ public class LoginSwingUI extends JFrame {
 
         loginButton.addActionListener((ActionEvent e) -> {
             String us = usernameTextField.getText();
-            String pd = new String(passwordField.getPassword());
-            boolean validPassword = ValidateForSwing.checkPassword(passwordField);
-
-            if (validPassword) {
+            String pd = new String(passwordField.getPassword());          
                 Account s = new Account(us, pd);
                 int level = Account.checkLevelAccount(s);
                 switch (level) {
@@ -72,10 +67,7 @@ public class LoginSwingUI extends JFrame {
                         managerMenu.setVisible(true);
                         dispose();
                         break;
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Invalid password. Password must be at least 8 characters long and contain at least one digit, one letter, and one special character.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+                }          
         });
 
         createAccountButton.addActionListener((ActionEvent e) -> {
@@ -83,9 +75,12 @@ public class LoginSwingUI extends JFrame {
             
             String us = usernameTextField.getText();
             String pd = new String(passwordField.getPassword());
+            boolean validUsername = ValidateForSwing.isValidUsername(us);
             boolean validPassword = ValidateForSwing.checkPassword(passwordField);
-            if (validPassword) {
-                createAccountUI.createAccountForCall(us,pd);
+            if (validUsername){
+                if (validPassword) {
+                   createAccountUI.createAccountForCall(us,pd);
+                } else JOptionPane.showMessageDialog(null, "Invalid password. Password must be at least 8 characters long and contain at least one digit, one letter, and one special character.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 

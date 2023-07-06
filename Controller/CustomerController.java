@@ -21,10 +21,10 @@ public class CustomerController {
                         MethodController.listAllBooks("List of Books",ManagementLibrary.book);
                         break;
                     case 2:
-                        MethodController.searchBooks();
+//                        MethodController.searchBooks();
                         break;
                     case 3:
-                        MethodController.lendBooks();
+//                        MethodController.lendBooks();
                         break;
                     case 4:
                         MethodController.returnBooks();

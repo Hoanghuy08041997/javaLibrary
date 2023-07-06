@@ -141,7 +141,7 @@ public class CreateAccountUI extends JPanel {
         String phone = "";
         LocalDate birthday = null;
         boolean isCancelled = false; 
-
+        
         while (email.isEmpty() && !isCancelled) {
             email = ValidateForSwing.getEmailInput();
             if (email.isEmpty()) {

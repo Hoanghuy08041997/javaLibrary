@@ -48,6 +48,24 @@ public class MethodController {
         }
         return matchingAccounts;
     }
+    
+    public static int remainingBookToBorrow(String searchCriteria, String s) {
+        int dem =0;
+        SearchPredicate<BookBorrow> searchCriteriaByProperties = new SearchPredicate<>(searchCriteria, s);
+        for (BookBorrow book : ManagementLibrary.bookBorrow) {
+            if (searchCriteriaByProperties.test(book)) {
+                dem++;
+            }
+        }  
+        int remaining = 0;
+        for (Book book : ManagementLibrary.book) {
+            if (Integer.toString(book.getId()).equals(s)) {
+                remaining = book.getNumber() - dem;
+                break;
+            }
+        }   
+        return remaining;
+    }
 
     //Method of the Customer
     public static <E> void listAllBooks(String ms, List<E> ls) {
@@ -63,16 +81,16 @@ public class MethodController {
         System.out.println("Total : " + ls.size() + " Books");
     }
 
-    public static List<Book> searchForBook(String searchCriteria, Object s) {
-        List<Book> rs = new ArrayList<>();
-        SearchPredicate<Book> p = new SearchPredicate<>(searchCriteria, s);
-        for (Book b : ManagementLibrary.book) {
-            if (p.test(b)) {
-                rs.add(b);
-            }
-        }
-        return rs;
-    }
+//    public static List<Book> searchForBook(String searchCriteria, Object s) {
+//        List<Book> rs = new ArrayList<>();
+//        SearchPredicate<Book> p = new SearchPredicate<>(searchCriteria, s);
+//        for (Book b : ManagementLibrary.book) {
+//            if (p.test(b)) {
+//                rs.add(b);
+//            }
+//        }
+//        return rs;
+//    }
 
     //Search Book
     public static List<Integer> searchBook(String searchCriteria, String s) {
@@ -85,44 +103,44 @@ public class MethodController {
         }
         return matchingAccounts;
     }
-     public static void searchBooks() {
-        String tt = "Search Book";
-        String[] ms = {"Search by Id",
-            "Search by Name",
-            "Search by Author",
-            "Search by Type",
-            "Exit"};
-        Menu m = new Menu(tt, ms) {
-            @Override
-            public void execute(int n) {
-
-                List<Book> bl = new ArrayList<>();
-                switch (n) {
-                    case 1:
-                        int id = Validate.intUserInput("Enter ID:");
-                        bl = searchForBook("Id", id);
-                        listAllBooks("List Searched Book", bl);
-                        break;
-                    case 2:
-                        String name = Validate.stringWithNumberUserInput("Enter Name:");
-                        bl = searchForBook("Name", name);
-                        listAllBooks("List Searched Book", bl);
-                        break;
-                    case 3:
-                        String author = Validate.nameUserInput("Enter Author:");
-                        bl = searchForBook("Author", author);
-                        listAllBooks("List Searched Book", bl);
-                        break;
-                    case 4:
-                        String type = chooseType();
-                        bl = searchForBook("Type", type);
-                        listAllBooks("List Searched Book", bl);
-                        break;
-                }
-            }
-        };
-        m.run();
-    }
+//    public static void searchBooks() {
+//        String tt = "Search Book";
+//        String[] ms = {"Search by Id",
+//            "Search by Name",
+//            "Search by Author",
+//            "Search by Type",
+//            "Exit"};
+//        Menu m = new Menu(tt, ms) {
+//            @Override
+//            public void execute(int n) {
+//
+//                List<Book> bl = new ArrayList<>();
+//                switch (n) {
+//                    case 1:
+//                        int id = Validate.intUserInput("Enter ID:");
+//                        bl = searchForBook("Id", id);
+//                        listAllBooks("List Searched Book", bl);
+//                        break;
+//                    case 2:
+//                        String name = Validate.stringWithNumberUserInput("Enter Name:");
+//                        bl = searchForBook("Name", name);
+//                        listAllBooks("List Searched Book", bl);
+//                        break;
+//                    case 3:
+//                        String author = Validate.nameUserInput("Enter Author:");
+//                        bl = searchForBook("Author", author);
+//                        listAllBooks("List Searched Book", bl);
+//                        break;
+//                    case 4:
+//                        String type = chooseType();
+//                        bl = searchForBook("Type", type);
+//                        listAllBooks("List Searched Book", bl);
+//                        break;
+//                }
+//            }
+//        };
+//        m.run();
+//    }
 
     public static String chooseType() {
         String tt = "Type Menu";
@@ -164,54 +182,54 @@ public class MethodController {
         }
         return type;
     }   
-    public static void lendBooks() {
-        Scanner sc = new Scanner(System.in);
-        List<Book> bl = new ArrayList<Book>();
-        int id;
-        while (true) {
-            id = Validate.intUserInput("Enter ID:");
-            bl = searchForBook("Id", id);
-            if (!bl.isEmpty()) {
-                if (bl.get(0).getNumber() == 0) {
-                    System.out.println("Number of book is Zero");
-
-                } else {
-                    for (BookBorrow bb : ManagementLibrary.bookBorrow) {
-                        if (bb.getIdCustomer() == ManagementLibrary.logged.get(0).getId()) 
-                            if (bb.getId() == bl.get(0).getId()){ 
-                                System.out.println("You have borrowed this book!");
-                                check = false;
-                                break;
-                            }
-                        
-
-                    }
-                    if (check==true) {
-                        System.out.println("Do you want to borrow?(y/n)");
-                        String yn = sc.next().toLowerCase().trim();
-                        if (yn.equals("y")) {
-                            for (Book b : ManagementLibrary.book) {
-                                if (b.getId() == id) {
-                                    b.setNumber(b.getNumber() - 1);
-                                    System.out.println(b.toString());
-                                    BookBorrow bb = new BookBorrow(b.getId(), b.getName(), b.getAuthor(), b.getNumber(),b.getPrice(), ManagementLibrary.logged.get(0).getId(), LocalDate.now(),false);
-
-                                    ManagementLibrary.bookBorrow.add(bb);
-                                }
-                            }
-                            System.out.println("Borrow successfully");
-                        }
-                    }
-
-                }
-            }
-            System.out.println("Do you want to continue(y/n)");
-            String yn = sc.next().toLowerCase().trim();
-            if (!(yn.equals("y"))) {
-                break;
-            }
-        }
-    }
+//    public static void lendBooks() {
+//        Scanner sc = new Scanner(System.in);
+//        List<Book> bl = new ArrayList<Book>();
+//        int id;
+//        while (true) {
+//            id = Validate.intUserInput("Enter ID:");
+//            bl = searchForBook("Id", id);
+//            if (!bl.isEmpty()) {
+//                if (bl.get(0).getNumber() == 0) {
+//                    System.out.println("Number of book is Zero");
+//
+//                } else {
+//                    for (BookBorrow bb : ManagementLibrary.bookBorrow) {
+//                        if (bb.getIdCustomer() == ManagementLibrary.logged.get(0).getId()) 
+//                            if (bb.getId() == bl.get(0).getId()){ 
+//                                System.out.println("You have borrowed this book!");
+//                                check = false;
+//                                break;
+//                            }
+//                        
+//
+//                    }
+//                    if (check==true) {
+//                        System.out.println("Do you want to borrow?(y/n)");
+//                        String yn = sc.next().toLowerCase().trim();
+//                        if (yn.equals("y")) {
+//                            for (Book b : ManagementLibrary.book) {
+//                                if (b.getId() == id) {
+//                                    b.setNumber(b.getNumber() - 1);
+//                                    System.out.println(b.toString());
+//                                    BookBorrow bb = new BookBorrow(b.getId(), b.getName(), b.getAuthor(), b.getNumber(),b.getPrice(), ManagementLibrary.logged.get(0).getId(), LocalDate.now(),false);
+//
+//                                    ManagementLibrary.bookBorrow.add(bb);
+//                                }
+//                            }
+//                            System.out.println("Borrow successfully");
+//                        }
+//                    }
+//
+//                }
+//            }
+//            System.out.println("Do you want to continue(y/n)");
+//            String yn = sc.next().toLowerCase().trim();
+//            if (!(yn.equals("y"))) {
+//                break;
+//            }
+//        }
+//    }
     
     public static void returnBooks() {
         Scanner sc = new Scanner(System.in);

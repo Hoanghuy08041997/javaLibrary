@@ -23,7 +23,7 @@ public class LoginController {
                                 Account.returnAccount(acc);
  
                                 System.out.println("WELCOME CUSTOMER");
-                                CustomerController.customerMenu();
+//                                CustomerController.customerMenu();
                                 break;
                             case 2:
                                 Account.returnAccount(acc);

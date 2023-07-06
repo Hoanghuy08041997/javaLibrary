@@ -150,7 +150,6 @@ public class ManagerMenuUI extends JFrame {
         loginInfoPanel.add(loginInfoButton);
 
         mainPanel.add(splitPane, BorderLayout.CENTER);
-        mainPanel.add(loginInfoPanel, BorderLayout.NORTH);
 
         setContentPane(mainPanel);
         pack();

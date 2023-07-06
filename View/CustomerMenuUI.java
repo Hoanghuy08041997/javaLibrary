@@ -13,10 +13,9 @@ public final class CustomerMenuUI extends JFrame {
     private JButton listBooksButton;
     private JButton searchBookButton;
     private JButton lendBookButton;
-    private JButton returnBookButton;
     private JButton listLendingBooksButton;
     private JButton exitButton;
-    private LoginInfoUI loginInfoUI;
+    private final LoginInfoUI loginInfoUI;
 
     public CustomerMenuUI() {
         setTitle("Customer Menu");
@@ -65,8 +64,6 @@ public final class CustomerMenuUI extends JFrame {
 
         // Add the loginInfoButton to the panel
         loginInfoPanel.add(loginInfoButton);
-
-        // Add the loginInfoPanel to the north of the mainPanel
         mainPanel.add(loginInfoPanel, BorderLayout.NORTH);
 
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
@@ -81,7 +78,10 @@ public final class CustomerMenuUI extends JFrame {
         // List books button
         listBooksButton = new JButton("1. List all books");
         listBooksButton.addActionListener((ActionEvent e) -> {
-            System.out.println("Hello1");
+            contentPanel.removeAll();
+            contentPanel.add(new BookListUI(ManagementLibrary.book));
+            contentPanel.revalidate();
+            contentPanel.repaint();
         });
         functionPanel.add(listBooksButton);
 
@@ -89,34 +89,30 @@ public final class CustomerMenuUI extends JFrame {
         searchBookButton = new JButton("2. Search Book");
         searchBookButton.addActionListener((ActionEvent e) -> {
             contentPanel.removeAll();
+            contentPanel.add(new SearchBookUI(ManagementLibrary.logged.get(0).getId()));
             contentPanel.revalidate();
             contentPanel.repaint();
         });
         functionPanel.add(searchBookButton);
 
-        // Lend book button
-        lendBookButton = new JButton("3. Lend book");
-        lendBookButton.addActionListener((ActionEvent e) -> {
-            // Handle lend book action
-        });
-        functionPanel.add(lendBookButton);
-
-        // Return book button
-        returnBookButton = new JButton("4. Return Book");
-        returnBookButton.addActionListener((ActionEvent e) -> {
-            System.out.println("Hello4");
-        });
-        functionPanel.add(returnBookButton);
-
         // List lending books button
-        listLendingBooksButton = new JButton("5. List Lending Book");
+        listLendingBooksButton = new JButton("3. List Lending Book");
         listLendingBooksButton.addActionListener((ActionEvent e) -> {
-            // Handle list lending books action
+            contentPanel.removeAll();
+            contentPanel.add(new BookBorrowListUI(ManagementLibrary.bookBorrow));
+            contentPanel.revalidate();
+            contentPanel.repaint();
         });
         functionPanel.add(listLendingBooksButton);
 
+        // Lend book button
+        lendBookButton = new JButton("Coming Soon...");
+        lendBookButton.addActionListener((ActionEvent e) -> {
+            JOptionPane.showMessageDialog(this, "Coming soon...");
+        });
+        functionPanel.add(lendBookButton);
         // Exit button
-        exitButton = new JButton("6. Exit");
+        exitButton = new JButton("5. Exit");
         exitButton.addActionListener((ActionEvent e) -> {
             MethodController.exit();
         });
