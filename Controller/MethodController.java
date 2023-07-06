@@ -20,16 +20,14 @@ public class MethodController {
         bookBorrow.addAll(IOReader.readFileBookBorrow("./src/ListBookBorrow.txt"));
         
 
-    }
-    
-     public static void saveData(){
+    }  
+    public static void saveData(){
         IOReader.saveFileAccount(ManagementLibrary.account, "./src/ListAccounts.txt");
         IOReader.saveFileCustomer(ManagementLibrary.customer, "./src/ListCustomer.txt"); 
         IOReader.saveFileBookBorrow(ManagementLibrary.bookBorrow, "./src/ListBookBorrow.txt");
         IOReader.saveFileBook(ManagementLibrary.book, "./src/ListBook.txt");
         
-    }
-    
+    }  
     public static void exit() {
         IOReader.saveFileAccount(ManagementLibrary.account, "./src/ListAccounts.txt");
         IOReader.saveFileCustomer(ManagementLibrary.customer, "./src/ListCustomer.txt");
@@ -37,7 +35,8 @@ public class MethodController {
         IOReader.saveFileBook(ManagementLibrary.book, "./src/ListBook.txt");
         System.exit(0);
     }
-
+    //Veriry!
+    
     //Method Account
     public static List<Integer> searchAccount(String searchCriteria, String s) {
         List<Integer> matchingAccounts = new ArrayList<>();
@@ -164,9 +163,7 @@ public class MethodController {
 
         }
         return type;
-    }
-
-    
+    }   
     public static void lendBooks() {
         Scanner sc = new Scanner(System.in);
         List<Book> bl = new ArrayList<Book>();
@@ -261,7 +258,7 @@ public class MethodController {
             }
         }
     }
-     public static void listLendingBook() {
+    public static void listLendingBook() {
         String ms = "List lending books";
         int count = 0;
         System.out.println("------" + ms + "------");

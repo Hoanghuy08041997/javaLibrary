@@ -219,7 +219,7 @@ public class SearchCustomerUI extends JPanel {
     private void lendBook(int idCustomer) {
         JPanel searchPanel = SearchBookUI.createPanel(idCustomer);
         JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.add(searchPanel);
         frame.pack();
         frame.setVisible(true); 
@@ -227,8 +227,12 @@ public class SearchCustomerUI extends JPanel {
     
     // Method to return book for selected account
     private void returnBook(int idCustomer) {
-        // Implement the logic to return a book from the specified customer here
-        // ...
+        JPanel searchPanel = SearchBookUI.createPanel(idCustomer);
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.add(searchPanel);
+        frame.pack();
+        frame.setVisible(true); 
     }
     
 }

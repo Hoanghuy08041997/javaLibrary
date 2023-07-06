@@ -10,12 +10,12 @@ public class BookListUI extends JPanel {
     public BookListUI(ArrayList<Book> books) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
-        String[] columnNames = {"ID", "Name", "Author", "Total Book", "Price"};
+        String[] columnNames = {"ID", "Name", "Author", "Type" ,"Total Book", "Price"};
         
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
         
         for (Book book : books) {
-            Object[] rowData = {book.getId(), book.getName(), book.getAuthor(),
+            Object[] rowData = {book.getId(), book.getName(), book.getAuthor(),book.getType(),
                                 book.getNumber(), book.getPrice()};
             tableModel.addRow(rowData);
         }
@@ -27,9 +27,10 @@ public class BookListUI extends JPanel {
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.getColumnModel().getColumn(0).setPreferredWidth(100);  // ID
         table.getColumnModel().getColumn(1).setPreferredWidth(250); // Name
-        table.getColumnModel().getColumn(2).setPreferredWidth(200); // Author
-        table.getColumnModel().getColumn(3).setPreferredWidth(120); // Total Book
-        table.getColumnModel().getColumn(4).setPreferredWidth(80);  // Price
+        table.getColumnModel().getColumn(2).setPreferredWidth(150); // Author
+        table.getColumnModel().getColumn(3).setPreferredWidth(100); //Type
+        table.getColumnModel().getColumn(4).setPreferredWidth(120); // Total Book
+        table.getColumnModel().getColumn(5).setPreferredWidth(80);  // Price
 
         
         JScrollPane scrollPane = new JScrollPane(table);

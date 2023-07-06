@@ -1,2 +1,0 @@
-3,C++ Fundamentals,Jack,2,180000,132266554,2023-07-05,false
-1,Java Simple,Jack,3,200000,2135541894,2023-07-05,false

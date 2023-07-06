@@ -7,8 +7,8 @@ public class BookBorrow extends Book {
     protected LocalDate dateBorrow;
     protected boolean status;
 
-    public BookBorrow( int id, String name, String author, int number,int price,int idCustomer, LocalDate dateBorrow, boolean status) {
-        super(id, name, author, number, price);
+    public BookBorrow( int id, String name, String author,String type, int number,int price,int idCustomer, LocalDate dateBorrow, boolean status) {
+        super(id, name, author,type, number, price);
         this.idCustomer = idCustomer;
         this.dateBorrow = dateBorrow;
         this.status = status;

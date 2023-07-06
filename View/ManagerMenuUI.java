@@ -20,6 +20,7 @@ public class ManagerMenuUI extends JFrame {
     private final AccountManagementUI accountManagementUI;
     private final CreateAccountUI createAccountUI;
     private final SearchCustomerUI searchCustomerUI;
+    private final SearchBookUI searchBookUI;
 
     public ManagerMenuUI() {
         setTitle("Manager Menu");
@@ -29,6 +30,7 @@ public class ManagerMenuUI extends JFrame {
         accountManagementUI = new AccountManagementUI();
         createAccountUI = new CreateAccountUI();
         searchCustomerUI = new SearchCustomerUI();
+        searchBookUI = new SearchBookUI(0);
     }
 
     private void initializeUI() {
@@ -66,7 +68,10 @@ public class ManagerMenuUI extends JFrame {
 
         searchBookButton = new JButton("3. Search book");
         searchBookButton.addActionListener((ActionEvent e) -> {
-            JOptionPane.showMessageDialog(this, "Coming soon...");
+            contentPanel.removeAll();
+            contentPanel.add(searchBookUI);
+            contentPanel.revalidate();
+            contentPanel.repaint();
         });
         functionPanel.add(searchBookButton);
 

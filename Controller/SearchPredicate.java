@@ -5,19 +5,20 @@ import java.util.function.Predicate;
 
 public class SearchPredicate<T> implements Predicate<T> {
     private final String property;
-    private final Object value;
+    private final String searchValue;
 
-    public SearchPredicate(String property, Object value) {
+    public SearchPredicate(String property, String searchValue) {
         this.property = property;
-        this.value = value;
+        this.searchValue = searchValue;
     }
 
     @Override
     public boolean test(T obj) {
         try {
             Object propertyValue = obj.getClass().getMethod("get" + capitalize(property)).invoke(obj);
-            return propertyValue.equals(value);
-        } catch (IllegalAccessException | IllegalArgumentException | NoSuchMethodException | SecurityException | InvocationTargetException e) {
+            return propertyValue != null && propertyValue.toString().contains(searchValue);
+        } catch (IllegalAccessException | IllegalArgumentException | NoSuchMethodException | SecurityException
+                | InvocationTargetException e) {
             return false;
         }
     }

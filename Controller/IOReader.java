@@ -132,7 +132,7 @@ public class IOReader {
             while ((line = br.readLine()) != null) {
                 String[] fields = line.split(",");
 
-                if (fields.length == 5) { // Check the number of fields
+                if (fields.length == 6) { // Check the number of fields
                     boolean hasNull = false;
                     for (String field : fields) {
                         if (field.trim().isEmpty()) {
@@ -145,9 +145,10 @@ public class IOReader {
                         int id = Integer.parseInt(fields[0].trim());
                         String name = fields[1].trim();
                         String author = fields[2].trim();
-                        int number = Integer.parseInt(fields[3].trim());
-                        int price = Integer.parseInt(fields[4].trim());
-                        bookList.add(new Book(id, name, author, number, price));
+                        String type = fields[3].trim();                       
+                        int number = Integer.parseInt(fields[4].trim());
+                        int price = Integer.parseInt(fields[5].trim());
+                        bookList.add(new Book(id, name, author, type, number, price));
                     } else {
                         System.out.println("Invalid number of fields: " + line);
                     }
@@ -178,7 +179,7 @@ public class IOReader {
         try {
             try (FileOutputStream fos = new FileOutputStream(path); OutputStreamWriter osw = new OutputStreamWriter(fos); BufferedWriter bw = new BufferedWriter(osw)) {
                 for (BookBorrow t : stdList) {
-                    String line = t.getId() + "," + t.getName() + "," + t.getAuthor() + "," + t.getNumber() + "," + t.getPrice() + "," + t.getIdCustomer() + "," + t.getDateBorrow() + "," + t.getStatus();
+                    String line = t.getId() + "," + t.getName() + "," + t.getAuthor() + "," + t.getType() + "," + t.getNumber() + "," + t.getPrice() + "," + t.getIdCustomer() + "," + t.getDateBorrow() + "," + t.getStatus();
                     bw.write(line);
                     bw.newLine();
                 }
@@ -200,17 +201,18 @@ public class IOReader {
             while ((line = br.readLine()) != null) {
                 String[] fields = line.split(",");
 
-                if (fields.length == 8) { // Check the number of fields
+                if (fields.length == 9) { // Check the number of fields
                     try {
                         int id = Integer.parseInt(fields[0].trim());
                         String name = fields[1].trim();
                         String author = fields[2].trim();
                         int number = Integer.parseInt(fields[3].trim());
-                        int price = Integer.parseInt(fields[4].trim());
-                        int idc = Integer.parseInt(fields[5].trim());
-                        LocalDate date = Validate.parseDate(fields[6].trim());
-                        boolean status = Boolean.parseBoolean(fields[7].trim()); // Use Boolean.parseBoolean to parse boolean value directly
-                        bb.add(new BookBorrow(id, name, author, number, price, idc, date, status));
+                        String type = fields[4].trim();
+                        int price = Integer.parseInt(fields[5].trim());
+                        int idc = Integer.parseInt(fields[6].trim());
+                        LocalDate date = Validate.parseDate(fields[7].trim());
+                        boolean status = Boolean.parseBoolean(fields[8].trim()); // Use Boolean.parseBoolean to parse boolean value directly
+                        bb.add(new BookBorrow(id, name, author,type, number, price, idc, date, status));
                     } catch (NumberFormatException e) {
                         System.out.println("Error parsing numeric values: " + line);
                     } catch (DateTimeParseException e) {
