@@ -206,13 +206,13 @@ public class IOReader {
                         int id = Integer.parseInt(fields[0].trim());
                         String name = fields[1].trim();
                         String author = fields[2].trim();
-                        int number = Integer.parseInt(fields[3].trim());
-                        String type = fields[4].trim();
+                        String type = fields[3].trim();
+                        int number = Integer.parseInt(fields[4].trim());
                         int price = Integer.parseInt(fields[5].trim());
                         int idc = Integer.parseInt(fields[6].trim());
                         LocalDate date = Validate.parseDate(fields[7].trim());
-                        boolean status = Boolean.parseBoolean(fields[8].trim()); // Use Boolean.parseBoolean to parse boolean value directly
-                        bb.add(new BookBorrow(id, name, author,type, number, price, idc, date, status));
+                        boolean status = Boolean.parseBoolean(fields[8].trim());
+                        bb.add(new BookBorrow(id, name, author, type, number, price, idc, date, status));
                     } catch (NumberFormatException e) {
                         System.out.println("Error parsing numeric values: " + line);
                     } catch (DateTimeParseException e) {
