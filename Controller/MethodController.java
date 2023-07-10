@@ -1,6 +1,7 @@
 package Controller;
 
 import static Controller.ManagementLibrary.*;
+import Model.Account;
 import Model.Book;
 import Model.BookBorrow;
 import Model.Customer;
@@ -80,11 +81,33 @@ public class MethodController {
         System.out.println("------------------");
         System.out.println("Total : " + ls.size() + " Books");
     }
+    public static <E> void listAllCustomer(String ms, List<E> ls) {
+        System.out.println("------" + ms + "------");
+        if (ls.isEmpty()) {
+            System.out.println("Not found");
+        } else {
+            for (E l : ls) {
+                System.out.println(l);
+            }
+        }
+        System.out.println("------------------");
+        System.out.println("Total : " + ls.size() + " Customer");
+    }
 
     public static List<Book> searchForBook(String searchCriteria, Object s) {
         List<Book> rs = new ArrayList<>();
-        SearchPredicate<Book> p = new SearchPredicate<>(searchCriteria, s);
+        SearchPredicate<Book> p = new SearchPredicate<>(searchCriteria, String.valueOf(s));
         for (Book b : ManagementLibrary.book) {
+            if (p.test(b)) {
+                rs.add(b);
+            }
+        }
+        return rs;
+    }
+    public static List<Customer> searchForCustomer(String searchCriteria, Object s) {
+        List<Customer> rs = new ArrayList<>();
+        SearchPredicate<Customer> p = new SearchPredicate<>(searchCriteria, String.valueOf(s));
+        for (Customer b : ManagementLibrary.customer) {
             if (p.test(b)) {
                 rs.add(b);
             }
@@ -141,6 +164,44 @@ public class MethodController {
         };
         m.run();
     }
+    public static void searchCustomer() {
+        String tt = "Search Book";
+        String[] ms = {"Search by Id",
+            "Search by Name",
+            "Search by Mail",
+            "Search by Phone number",
+            "Exit"};
+        Menu m = new Menu(tt, ms) {
+            @Override
+            public void execute(int n) {
+
+                List<Customer> bl = new ArrayList<>();
+                switch (n) {
+                    case 1:
+                        int id = Validate.intUserInput("Enter ID:");
+                        bl = searchForCustomer("Id", id);
+                        listAllBooks("List Searched Book", bl);
+                        break;
+                    case 2:
+                        String name = Validate.stringWithNumberUserInput("Enter Name:");
+                        bl = searchForCustomer("Name", name);
+                        listAllBooks("List Searched Book", bl);
+                        break;
+                    case 3:
+                        String email = ValidateForSwing.getEmailInput();
+                        bl = searchForCustomer("Email", email);
+                        listAllBooks("List Searched Book", bl);
+                        break;
+                    case 4:
+                        String phone = Validate.stringPhone09Input("Enter phone number:");
+                        bl = searchForCustomer("Phone", phone);
+                        listAllBooks("List Searched Book", bl);
+                        break;
+                }
+            }
+        };
+        m.run();
+    }
 
     public static String chooseType() {
         String tt = "Type Menu";
@@ -186,19 +247,19 @@ public class MethodController {
         Scanner sc = new Scanner(System.in);
         List<Book> bl = new ArrayList<Book>();
         int id;
+        boolean check = true;
         while (true) {
             id = Validate.intUserInput("Enter ID:");
             bl = searchForBook("Id", id);
             if (!bl.isEmpty()) {
                 if (bl.get(0).getNumber() == 0) {
                     System.out.println("Number of book is Zero");
-
                 } else {
                     for (BookBorrow bb : ManagementLibrary.bookBorrow) {
                         if (bb.getIdCustomer() == ManagementLibrary.logged.get(0).getId()) 
                             if (bb.getId() == bl.get(0).getId()){ 
                                 System.out.println("You have borrowed this book!");
-                                check = false;
+                            check = false;
                                 break;
                             }
                         
@@ -212,7 +273,7 @@ public class MethodController {
                                 if (b.getId() == id) {
                                     b.setNumber(b.getNumber() - 1);
                                     System.out.println(b.toString());
-                                    BookBorrow bb = new BookBorrow(b.getId(), b.getName(), b.getAuthor(), b.getNumber(),b.getPrice(), ManagementLibrary.logged.get(0).getId(), LocalDate.now(),false);
+                                    BookBorrow bb = new BookBorrow(b.getId(), b.getName(), b.getAuthor(),b.getType(), b.getNumber(),b.getPrice(), ManagementLibrary.logged.get(0).getId(), LocalDate.now(),false);
 
                                     ManagementLibrary.bookBorrow.add(bb);
                                 }
@@ -291,4 +352,55 @@ public class MethodController {
         //
     }
     //
+    public static void deleteCustomer(int id){
+        for (Customer cus : ManagementLibrary.customer){
+            if (id == cus.getId()){
+                ManagementLibrary.customer.remove(cus);
+                break;
+            }
+        }
+        for (Account acc : ManagementLibrary.account){
+            if (id == acc.getId()){
+                ManagementLibrary.account.remove(acc);
+                break;
+            }
+        }
+        
+    }
+    
+    public static void deleteBook(int id){
+        for (Book b : ManagementLibrary.book){
+            if (id == b.getId()){
+                ManagementLibrary.book.remove(b);
+                break;
+            }
+        }
+    }
+    public static void removeBook(){
+        int id = Validate.intUserInput("Enter ID:");
+        List ls= searchForBook("Id", id);
+        listAllBooks("List customer", ls);
+        System.out.println("Do you want to delete?");
+        Scanner sc = new Scanner(System.in);
+        if(sc.nextLine().equals("y")){
+            deleteBook(id);
+        }
+    }
+    
+    public static void removeAccount(){
+        int id = Validate.intUserInput("Enter ID:");
+        List ls= searchForCustomer("Id", id);
+        listAllCustomer("List customer", ls);
+        System.out.println("Do you want to delete?");
+        Scanner sc = new Scanner(System.in);
+        if(sc.nextLine().equals("y")){
+            deleteCustomer(id);
+        }
+    }
+    public static void updateCustomer(){
+        
+    }
+    public static void updateBook(){
+        
+    }
 }

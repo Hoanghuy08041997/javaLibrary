@@ -8,32 +8,44 @@ public class ManagerController {
         String tt = "Manager Menu";
         String[] ls = {"List all book",
         "List all customer",
+        "List book borrow",
         "Sreach book",
         "Sreach customer",
-        "Add account",
+        "Update book",
+        "Update customer",
         "Remove account",
-        "Remove book"};
+        "Remove book",
+        "Exit"};
         Menu m = new Menu(tt, ls) {
             @Override
             public void execute(int i) {
                 switch (i) {
                     case 1:
-                        System.out.println("Hello1");
+                        MethodController.listAllBooks("List book", ManagementLibrary.book);
                         break;
                     case 2:
-                        System.out.println(ManagementLibrary.customer);
+                        MethodController.listAllCustomer("List customer", ManagementLibrary.customer);
                         break;
                     case 3:
-                        System.out.println("Hello3");
+                        MethodController.listAllBooks("List book borrow", ManagementLibrary.bookBorrow);
                         break;
                     case 4:
-                        System.out.println("Hello4");
+                        MethodController.searchBooks();
                         break;                   
                     case 5:
-                        System.out.println("Hello");
+                        MethodController.searchCustomer();
                         break;
                     case 6:
 
+                        break;                   
+                    case 7:
+
+                        break;                   
+                    case 8:
+                        MethodController.removeAccount();
+                        break;                   
+                    case 9:
+                        MethodController.removeBook();
                         break;                   
                 }
             }
