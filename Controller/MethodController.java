@@ -7,6 +7,7 @@ import Model.BookBorrow;
 import Model.Customer;
 import View.Menu;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -102,6 +103,7 @@ public class MethodController {
                 rs.add(b);
             }
         }
+        
         return rs;
     }
     public static List<Customer> searchForCustomer(String searchCriteria, Object s) {
@@ -180,22 +182,22 @@ public class MethodController {
                     case 1:
                         int id = Validate.intUserInput("Enter ID:");
                         bl = searchForCustomer("Id", id);
-                        listAllBooks("List Searched Book", bl);
+                        listAllCustomer("List Searched Customer", bl);
                         break;
                     case 2:
                         String name = Validate.stringWithNumberUserInput("Enter Name:");
                         bl = searchForCustomer("Name", name);
-                        listAllBooks("List Searched Book", bl);
+                        listAllCustomer("List Searched Customer", bl);
                         break;
                     case 3:
-                        String email = ValidateForSwing.getEmailInput();
+                        String email = Validate.stringEmailInput("Enter email:");
                         bl = searchForCustomer("Email", email);
-                        listAllBooks("List Searched Book", bl);
+                        listAllCustomer("List Searched Customer", bl);
                         break;
                     case 4:
                         String phone = Validate.stringPhone09Input("Enter phone number:");
                         bl = searchForCustomer("Phone", phone);
-                        listAllBooks("List Searched Book", bl);
+                        listAllCustomer("List Searched Customer", bl);
                         break;
                 }
             }
@@ -397,10 +399,129 @@ public class MethodController {
             deleteCustomer(id);
         }
     }
-    public static void updateCustomer(){
+
+    
+    
+    public static void updateCustomer (String id, String type, String value){
+        for(Customer cus : ManagementLibrary.customer){
+            if (Integer.parseInt(id) == cus.getId() ){
+                cus.setId(Integer.parseInt(value));
+            }
+            else if (Integer.parseInt(id) == cus.getId()  && type.equals("2")){
+                cus.setName(value);
+            }
+            else if (Integer.parseInt(id) == cus.getId()  && type.equals("3")){
+                cus.setEmail(value);
+            }
+            else if (Integer.parseInt(id) == cus.getId()  && type.equals("4")){
+                cus.setPhone(value);
+            }
+            else if (Integer.parseInt(id) == cus.getId() && type.equals("5") ){
+                cus.setBirthday(LocalDate.parse(value, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+            }
+        }
+    }
+    
+    public static void menuUpdateBook(){
+        int id = Validate.intUserInput("Enter ID:");
+        List ls= searchForBook("Id", id);
+        listAllBooks("Book want to change", ls);
+        if (!ls.isEmpty()){
+        String tt = "Update Book";
+        String[] ms = {"Id",
+            "Name",
+            "Type",
+            "Number",
+            "Authur",
+            "Price",
+            "Exit"};
+        Menu m = new Menu(tt, ms) {
+            @Override
+            public void execute(int n) {
+                for(Book book : ManagementLibrary.book){
+                switch (n) {
+                    case 1:
+                              if (book.getId() == id ){
+                             book.setId(Validate.intUserInput("Enter change value"));
+                         }break;
+                    case 2:
+                              if (book.getId() == id ){
+                             book.setName(Validate.stringUserInput("Enter change value"));
+                         }break;
+                    case 3:
+                              if (book.getId() == id ){
+                             book.setType(Validate.stringUserInput("Enter change value"));
+                         }break;
+                    case 4:
+                              if (book.getId() == id ){
+                             book.setNumber(Validate.intUserInput("Enter change value"));
+                         }break;
+                    case 5:
+                              if (book.getId() == id ){
+                             book.setAuthor(Validate.stringUserInput("Enter change value"));
+                         }break;
+                    case 6:
+                              if (book.getId() == id ){
+                             book.setPrice(Validate.intUserInput("Enter change value"));
+                         }break;
+                   
+                         }
+                }
+            }
+        }; 
+        m.run();
+        }
         
     }
-    public static void updateBook(){
-        
+    public static void menuUpdateCustomer(){
+        int id = Validate.intUserInput("Enter ID:");
+        List ls= searchForCustomer("Id", id);
+        listAllCustomer("Customer want to change", ls);
+       if(!ls.isEmpty()){
+        String tt = "Update Customer";
+        String[] ms = {"Id",
+            "Name",
+            "Email",
+            "Phone",
+            "Date of birth",
+            "Exit"};
+        Menu m = new Menu(tt, ms) {
+            @Override
+            public void execute(int n) {
+                for(Customer cus : ManagementLibrary.customer){
+                    switch (n) {
+                        case 1:
+                             if (cus.getId() == id ){
+                             cus.setId(Validate.intUserInput("Enter change value"));
+                             }
+                            break;
+                        case 2:
+                             if (cus.getId() == id ){
+                             cus.setName(Validate.stringUserInput("Enter change value"));
+                             }
+                            break;
+                        case 3:
+                             if (cus.getId() == id ){
+                             cus.setEmail(Validate.stringEmailInput("Enter change value"));
+                             }
+                            break;
+                        case 4:
+                             if (cus.getId() == id ){
+                             cus.setPhone(Validate.stringPhoneInput("Enter change value"));
+                             }
+                            break;
+                        case 5:
+                             if (cus.getId() == id ){
+                             cus.setBirthday(LocalDate.parse(Validate.getBirthdayString("Enter change value"), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+                             }
+                            break;
+                      
+                    }
+                }
+            }
+        }; 
+        m.run();
+        }
     }
+    
 }
