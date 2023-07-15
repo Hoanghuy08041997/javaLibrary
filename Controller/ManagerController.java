@@ -36,10 +36,10 @@ public class ManagerController {
                         MethodController.searchCustomer();
                         break;
                     case 6:
-
+                        MethodController.menuUpdateBook();
                         break;                   
                     case 7:
-
+                        MethodController.menuUpdateCustomer();
                         break;                   
                     case 8:
                         MethodController.removeAccount();
