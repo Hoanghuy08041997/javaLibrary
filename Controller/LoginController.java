@@ -68,15 +68,14 @@ public class LoginController {
                             while (!valid){
                                 String username = Validate.stringWithNumberUserInput("Username: ");
                                 String password = Validate.checkedPass("Password: ");
-                                if (Validate.isValidUsername(username) && Validate.checkPassword(password)){
-
-                                    String email = Validate.stringEmailInput("Email: ");
-                                    String phone = Validate.stringPhoneInput("Phone: ");
-                                    LocalDate birthday = Validate.parseDate(Validate.getBirthdayString("Birthday: "));
-
-                                    Customer c = new Customer(id, username, email, phone, birthday, 1);
-                                    ManagementLibrary.account.add(new Account(username, password, 1, id));
-                                    ManagementLibrary.customer.add(c);
+                                if (Validate.isValidUsername(username)){
+                                        String email = Validate.stringEmailInput("Email: ");
+                                        String phone = Validate.stringPhoneInput("Phone: ");
+                                        LocalDate birthday = Validate.parseDate(Validate.getBirthdayString("Birthday: "));
+                                        Customer c = new Customer(id, username, email, phone, birthday, 1);
+                                        ManagementLibrary.account.add(new Account(username, password, 1, id));
+                                        ManagementLibrary.customer.add(c);           
+                                        valid = true;
                                 } else System.out.println("");
                             }
                         break;
