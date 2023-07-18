@@ -46,7 +46,11 @@ public class ManagerController {
                         break;                   
                     case 9:
                         MethodController.removeBook();
-                        break;                   
+                        break;  
+                    case 10:
+                        System.out.println("Bye!");
+                        MethodController.saveData();
+                        break;
                 }
             }
         };

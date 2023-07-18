@@ -16,9 +16,11 @@ public class MethodController {
 
     //Method Backup Data
     public static void loadData() {
-        account.addAll(IOReader.readFileAccount("./src/ListAccounts.txt"));
-        customer.addAll(IOReader.readFileCustomer("./src/ListCustomer.txt"));
+//        account.addAll(IOReader.readFileAccount("./src/ListAccounts.txt"));
+//        customer.addAll(IOReader.readFileCustomer("./src/ListCustomer.txt"));
+        book.clear();
         book.addAll(IOReader.readFileBook("./src/ListBook.txt"));
+        bookBorrow.clear();
         bookBorrow.addAll(IOReader.readFileBookBorrow("./src/ListBookBorrow.txt"));
         
 
@@ -134,7 +136,7 @@ public class MethodController {
             "Search by Name",
             "Search by Author",
             "Search by Type",
-            "Exit"};
+            "Back"};
         Menu m = new Menu(tt, ms) {
             @Override
             public void execute(int n) {
@@ -167,12 +169,12 @@ public class MethodController {
         m.run();
     }
     public static void searchCustomer() {
-        String tt = "Search Book";
+        String tt = "Search Customer";
         String[] ms = {"Search by Id",
             "Search by Name",
             "Search by Mail",
             "Search by Phone number",
-            "Exit"};
+            "Back"};
         Menu m = new Menu(tt, ms) {
             @Override
             public void execute(int n) {
@@ -253,13 +255,15 @@ public class MethodController {
         while (true) {
             id = Validate.intUserInput("Enter ID:");
             bl = searchForBook("Id", id);
+            listAllBooks("List Searched Book", bl);
             if (!bl.isEmpty()) {
-                if (bl.get(0).getNumber() == 0) {
+                int choice = Validate.intUserInput("Enter book that you want to borrow");
+                if (bl.get(choice-1).getNumber() == 0) {
                     System.out.println("Number of book is Zero");
                 } else {
                     for (BookBorrow bb : ManagementLibrary.bookBorrow) {
                         if (bb.getIdCustomer() == ManagementLibrary.logged.get(0).getId()) 
-                            if (bb.getId() == bl.get(0).getId()){ 
+                            if (bb.getId() == bl.get(choice-1).getId()){ 
                                 System.out.println("You have borrowed this book!");
                             check = false;
                                 break;
@@ -268,20 +272,20 @@ public class MethodController {
 
                     }
                     if (check==true) {
-                        System.out.println("Do you want to borrow?(y/n)");
-                        String yn = sc.next().toLowerCase().trim();
-                        if (yn.equals("y")) {
+//                        System.out.println("Do you want to borrow?(y/n)");
+//                        String yn = sc.next().toLowerCase().trim();
+//                        if (yn.equals("y")) {
                             for (Book b : ManagementLibrary.book) {
-                                if (b.getId() == id) {
+                                if (b.getId() == bl.get(choice-1).getId()) {
                                     b.setNumber(b.getNumber() - 1);
-                                    System.out.println(b.toString());
-                                    BookBorrow bb = new BookBorrow(b.getId(), b.getName(), b.getAuthor(),b.getType(), b.getNumber(),b.getPrice(), ManagementLibrary.logged.get(0).getId(), LocalDate.now(),false);
+                                    
+                                    BookBorrow bb = new BookBorrow(b.getId(), b.getName(), b.getAuthor(),b.getType(), 1,b.getPrice(), ManagementLibrary.logged.get(0).getId(), LocalDate.now(),false);
 
                                     ManagementLibrary.bookBorrow.add(bb);
                                 }
                             }
                             System.out.println("Borrow successfully");
-                        }
+//                        }
                     }
 
                 }
@@ -434,7 +438,7 @@ public class MethodController {
             "Number",
             "Authur",
             "Price",
-            "Exit"};
+            "Back"};
         Menu m = new Menu(tt, ms) {
             @Override
             public void execute(int n) {
@@ -484,7 +488,7 @@ public class MethodController {
             "Email",
             "Phone",
             "Date of birth",
-            "Exit"};
+            "Back"};
         Menu m = new Menu(tt, ms) {
             @Override
             public void execute(int n) {

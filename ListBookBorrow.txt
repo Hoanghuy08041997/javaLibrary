@@ -1,3 +1,6 @@
-3,C++ Fundamentals,Jack,Science,2,180000,132266554,2023-07-06,false
 5,HTML & CSS Essentials,Jack,Comic,6,120000,132266554,2023-07-06,false
 4,JavaScript Mastery,Jack,Comic,4,220000,132266554,2023-07-06,false
+7,SQL Mastery,Sam,Manga,1,190000,132266554,2023-07-18,false
+1,Java Simple,Jack,Science,1,200000,132266554,2023-07-18,false
+10,Swift Programming,Steve,Manga,1,230000,132266555,2023-07-18,false
+8,PHP for Beginners,Peter,Manga,1,160000,132266555,2023-07-18,false

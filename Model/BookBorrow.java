@@ -1,6 +1,7 @@
 package Model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class BookBorrow extends Book {
     protected int idCustomer;
@@ -45,7 +46,7 @@ public class BookBorrow extends Book {
 
     @Override
     public String toString() {
-        String print=String.format("%-7s%-30s%-20s%-30s%-30s%-30s","id=" + id , "name=" + name , "authoir=" + author ,"price=" + price,"dateBorrow"+dateBorrow,"dateReturn"+status);
+        String print=String.format("%-7s%-30s%-20s%-30s%-30s%-30s","id=" + id , "name=" + name , "authoir=" + author ,"price=" + price,"dateBorrow="+dateBorrow.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),"Status="+status);
         return print;
     }
 

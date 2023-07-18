@@ -1,6 +1,7 @@
 package Model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Customer extends People {
 
@@ -12,7 +13,7 @@ public class Customer extends People {
 
     @Override
     public String toString() {
-        return "Account [" + " || ID=" + id  + " || Username= " + name + " ||  Email=" + email + "  || Phone=" + phone + "  || Birthday=" + birthday + "  || Level=" + levelUser + ']';
+        return "Account [" + " || ID=" + id  + " || Username= " + name + " ||  Email=" + email + "  || Phone=" + phone + "  || Birthday=" + birthday.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "  || Level=" + levelUser + ']';
     }  
     
 

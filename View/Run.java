@@ -5,7 +5,7 @@ import Controller.MethodController;
 
 public class Run {
     public static void main(String[] args) {
-        MethodController.loadData();
+//        MethodController.loadData();
         LoginController.LoginVerify();
     }
     

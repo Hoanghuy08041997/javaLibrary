@@ -21,20 +21,21 @@ public class CustomerController {
                         MethodController.listAllBooks("List of Books",ManagementLibrary.book);
                         break;
                     case 2:
-//                        MethodController.searchBooks();
+                        MethodController.searchBooks();
                         break;
                     case 3:
-//                        MethodController.lendBooks();
+                        MethodController.lendBooks();
                         break;
                     case 4:
                         MethodController.returnBooks();
                         break;   
                     case 5:
-                        MethodController.listAllBooks("List lending Books",ManagementLibrary.bookBorrow);
+                        MethodController.listLendingBook();
                         break;
                     case 6:
                         System.out.println("Bye!");
-                        System.exit(0);
+                        MethodController.saveData();
+                        break;
                 }
             }
         };

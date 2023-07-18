@@ -1,5 +1,7 @@
 package Controller;
 
+import static Controller.ManagementLibrary.account;
+import static Controller.ManagementLibrary.customer;
 import Model.Account;
 import Model.Customer;
 import View.Menu;
@@ -8,6 +10,9 @@ import java.util.Random;
 
 public class LoginController {
     public static void LoginVerify(){
+        account.addAll(IOReader.readFileAccount("./src/ListAccounts.txt"));
+        customer.addAll(IOReader.readFileCustomer("./src/ListCustomer.txt"));
+        
         String [] options = {"Login Account","Create Account", "Exit"};
         Menu menu = new Menu("Welcome to Form Login Menu ",options) {
             @Override
@@ -21,12 +26,13 @@ public class LoginController {
                         switch (level) {
                             case 1:
                                 Account.returnAccount(acc);
- 
+                                MethodController.loadData();
                                 System.out.println("WELCOME CUSTOMER");
-//                                CustomerController.customerMenu();
+                                CustomerController.customerMenu();
                                 break;
                             case 2:
                                 Account.returnAccount(acc);
+                                MethodController.loadData();
                                 System.out.println("\u001B[32m" + "WELCOME MANAGER" + "\u001B[0m");
                                 ManagerController.managerMenu();
                                 break;
@@ -59,7 +65,7 @@ public class LoginController {
                             }
                         } while (!valid);
                         String username = Validate.stringWithNumberUserInput("Username: ");
-                        String password = Validate.stringWithNumberUserInput("Password: ");
+                        String password = Validate.checkedPass("Password: ");
                         String email = Validate.stringEmailInput("Email: ");
                         String phone = Validate.stringPhoneInput("Phone: ");
                         LocalDate birthday = Validate.parseDate(Validate.getBirthdayString("Birthday: "));
