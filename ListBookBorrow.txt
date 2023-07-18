@@ -4,3 +4,4 @@
 1,Java Simple,Jack,Science,1,200000,132266554,2023-07-18,false
 10,Swift Programming,Steve,Manga,1,230000,132266555,2023-07-18,false
 8,PHP for Beginners,Peter,Manga,1,160000,132266555,2023-07-18,false
+6,Data Science with R,Rachel,Manga,1,250000,132266555,2023-07-18,false

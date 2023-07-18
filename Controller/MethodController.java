@@ -403,9 +403,7 @@ public class MethodController {
             deleteCustomer(id);
         }
     }
-
-    
-    
+ 
     public static void updateCustomer (String id, String type, String value){
         for(Customer cus : ManagementLibrary.customer){
             if (Integer.parseInt(id) == cus.getId() ){

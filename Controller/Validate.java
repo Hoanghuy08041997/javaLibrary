@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Customer;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
@@ -12,100 +13,7 @@ import java.util.Scanner;
 public class Validate {
     
     //input Option
-    public static int twoOptionUserInput(String msg){
-        if (!msg.isEmpty()) System.out.println("\u001B[34m" + msg + "\u001B[0m");
-        Scanner input = new Scanner(System.in);
-        int option = 0;
-        boolean valid = false;
-        while (!valid) {
-        String numStr = input.nextLine();
-            if (!numStr.contains("  ") && !numStr.startsWith(" ") && numStr.matches("[12]") && !numStr.isEmpty() ) {
-                option = Integer.parseInt(numStr); 
-                valid = true;
-            } else System.out.println("That wrong. Please following.");
-        }
-        return option;
-    }    
-    public static int threeOptionUserInput(String msg){
-        if (!msg.isEmpty()) System.out.println("\u001B[34m" + msg + "\u001B[0m");
-        Scanner input = new Scanner(System.in);
-        int option = 0;
-        boolean valid = false;
-        while (!valid) {
-        String numStr = input.nextLine();
-            if (!numStr.contains("  ") && !numStr.startsWith(" ") && numStr.matches("[123]") && !numStr.isEmpty() ) {
-                option = Integer.parseInt(numStr); 
-                valid = true;
-            } else System.out.println("That wrong. Please following from 1 -> 3.");
-        }
-        return option;
-    }  
-    public static int fourOptionUserInput(String msg){
-        if (!msg.isEmpty()) System.out.println("\u001B[34m" + msg + "\u001B[0m");
-        Scanner input = new Scanner(System.in);
-        int option = 0;
-        boolean valid = false;
-        while (!valid) {
-        String numStr = input.nextLine();
-            if (!numStr.contains("  ") && !numStr.startsWith(" ") && numStr.matches("[1234]") && !numStr.isEmpty() ) {
-                option = Integer.parseInt(numStr); 
-                valid = true;
-            } else System.out.println("That wrong. Please following 1 -> 4.");
-        }
-        return option;
-    }      
-    public static int fiveOptionUserInput(){
-        Scanner input = new Scanner(System.in);
-        int option = 0;
-        boolean valid = false;
-        while (!valid) {
-        String numStr = input.nextLine();
-            if (!numStr.contains("  ") && !numStr.startsWith(" ") && numStr.matches("[12345]") && !numStr.isEmpty() ) {
-                option = Integer.parseInt(numStr); 
-                valid = true;
-            } else System.out.println("That wrong. Please following 1 -> 5.");
-        }
-        return option;
-    }  
-    public static int sixOptionUserInput(){
-        Scanner input = new Scanner(System.in);
-        int option = 0;
-        boolean valid = false;
-        while (!valid) {
-        String numStr = input.nextLine();
-            if (!numStr.contains("  ") && !numStr.startsWith(" ") && numStr.matches("[123456]") && !numStr.isEmpty() ) {
-                option = Integer.parseInt(numStr); 
-                valid = true;
-            } else System.out.println("That wrong. Please following 1 -> 6.");
-        }
-        return option;
-    }  
-    public static int sevenOptionUserInput(){
-        Scanner input = new Scanner(System.in);
-        int option = 0;
-        boolean valid = false;
-        while (!valid) {
-        String numStr = input.nextLine();
-            if (!numStr.contains("  ") && !numStr.startsWith(" ") && numStr.matches("[1234567]") && !numStr.isEmpty() ) {
-                option = Integer.parseInt(numStr); 
-                valid = true;
-            } else System.out.println("That wrong. Please following 1 -> 7.");
-        }
-        return option;
-    }  
-    public static int eightOptionUserInput(){
-        Scanner input = new Scanner(System.in);
-        int option = 0;
-        boolean valid = false;
-        while (!valid) {
-        String numStr = input.nextLine();
-            if (!numStr.contains("  ") && !numStr.startsWith(" ") && numStr.matches("[12345678]") && !numStr.isEmpty() ) {
-                option = Integer.parseInt(numStr); 
-                valid = true;
-            } else System.out.println("That wrong. Please following 1 -> 8.");
-        }
-        return option;
-    } 
+
     public static int menuOptionUserInput(int i){
         Scanner input = new Scanner(System.in);
         int option = 0;
@@ -390,6 +298,35 @@ public class Validate {
     }
     
     //Others checking
+    public static boolean isValidUsername(String username) {
+        if (!username.startsWith(" ") && !username.isEmpty()) {
+            if (isDuplicateUsername(username)) {
+                System.out.println("Username is already used by another account. Please enter a different username.");
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            System.out.println("Invalid username. Username only include number and character. Please enter again.");
+            return false;
+        }
+    }
+    public static boolean isDuplicateUsername(String username) {
+        for (Customer existingCustomer : ManagementLibrary.customer) {
+            if (existingCustomer.getName().equals(username)) {
+                return true; // Found a duplicate username
+            }
+        }
+
+        return false; // No duplicate username found
+    }  
+    public static boolean checkPassword(String s) {
+        return s.length() >= 8 && s.matches("^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=]).*$");
+    }
+    public static String getPasswordInput(String s) {
+        return s.trim();
+    }
+    
     public static boolean checkArrayListEmpty(ArrayList<?> Arr) {
         boolean valid = false;
         if (Arr.isEmpty()) valid = true;

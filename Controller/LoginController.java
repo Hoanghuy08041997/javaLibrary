@@ -47,32 +47,39 @@ public class LoginController {
                         boolean valid = false;
                         Random random = new Random();
 
-                        if (ManagementLibrary.account.isEmpty()) {
-                            valid = true;
-                        }
+                            if (ManagementLibrary.account.isEmpty()) {
+                                valid = true;
+                            }
 
-                        do {
-                            id = random.nextInt(Integer.MAX_VALUE);                         
-                            if (!ManagementLibrary.account.isEmpty()) {
-                                for (int k = 0; k < ManagementLibrary.account.size(); k++) {
-                                    if (id == ManagementLibrary.account.get(k).getId()) {
-                                        valid = false;
-                                        break;
-                                    } else {
-                                        valid = true;
+                            do {
+                                id = random.nextInt(Integer.MAX_VALUE);                         
+                                if (!ManagementLibrary.account.isEmpty()) {
+                                    for (int k = 0; k < ManagementLibrary.account.size(); k++) {
+                                        if (id == ManagementLibrary.account.get(k).getId()) {
+                                            valid = false;
+                                            break;
+                                        } else {
+                                            valid = true;
+                                        }
                                     }
                                 }
-                            }
-                        } while (!valid);
-                        String username = Validate.stringWithNumberUserInput("Username: ");
-                        String password = Validate.checkedPass("Password: ");
-                        String email = Validate.stringEmailInput("Email: ");
-                        String phone = Validate.stringPhoneInput("Phone: ");
-                        LocalDate birthday = Validate.parseDate(Validate.getBirthdayString("Birthday: "));
+                            } while (!valid);
+                            
+                            valid = false;
+                            while (!valid){
+                                String username = Validate.stringWithNumberUserInput("Username: ");
+                                String password = Validate.checkedPass("Password: ");
+                                if (Validate.isValidUsername(username) && Validate.checkPassword(password)){
 
-                        Customer c = new Customer(id, username, email, phone, birthday, 1);
-                        ManagementLibrary.account.add(new Account(username, password, 1, id));
-                        ManagementLibrary.customer.add(c);
+                                    String email = Validate.stringEmailInput("Email: ");
+                                    String phone = Validate.stringPhoneInput("Phone: ");
+                                    LocalDate birthday = Validate.parseDate(Validate.getBirthdayString("Birthday: "));
+
+                                    Customer c = new Customer(id, username, email, phone, birthday, 1);
+                                    ManagementLibrary.account.add(new Account(username, password, 1, id));
+                                    ManagementLibrary.customer.add(c);
+                                } else System.out.println("");
+                            }
                         break;
 
                     case 3:
