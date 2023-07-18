@@ -46,7 +46,6 @@ public class LoginController {
                         int id;
                         boolean valid = false;
                         Random random = new Random();
-
                             if (ManagementLibrary.account.isEmpty()) {
                                 valid = true;
                             }
